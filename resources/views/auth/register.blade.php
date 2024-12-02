@@ -1,18 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
+@section('title')
+    Register
+@endsection
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="card">
+            <div class="card-body p-4">
+                <div class="p-2 mt-4">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">Nama Lengkap</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -54,10 +55,13 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <select class="form-select" id="role" name="role" value="{{ old('role') }}" aria-label="Default select example">
+                                    <option selected>Pilih Role</option>
+                                    <option value="admin">admin</option>
+                                    <option value="user">user</option>
+                                  </select>
                             </div>
                         </div>
 
@@ -70,8 +74,10 @@
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
+
     </div>
 </div>
 @endsection
