@@ -16,6 +16,7 @@ class Penilaian extends Model
      *
      * @var array<int, string>
      */
+    protected $table = 'penilaians';
     protected $fillable = [
         'user_id',
         'rating',

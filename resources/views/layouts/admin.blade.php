@@ -2,42 +2,55 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    @include('layouts.title-meta')
-    @include('layouts.head')
+    <meta charset="utf-8" />
+    <title> @yield('title') | Tocly - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico') }}">
+
+    <!-- include head css -->
+    @include('layouts.head-css')
 </head>
 
-@section('body')
-
-    <body>
-    @show
+@yield('body')
 
     <!-- Begin page -->
     <div id="layout-wrapper">
-        @include('layouts.topbar')
-        @include('layouts.sidebar')
-        <!-- ============================================================== -->
-        <!-- Start right Content here -->
-        <!-- ============================================================== -->
-        <div class="main-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    @yield('content')
+            <!-- topbar -->
+            @include('layouts.topbar')
+
+            <!-- sidebar components -->
+            @include('layouts.sidebar')
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+                        @yield('content')
+                    </div>
+                    <!-- container-fluid -->
                 </div>
-                <!-- container-fluid -->
+                <!-- End Page-content -->
+
+                <!-- footer -->
+                @include('layouts.footer')
+
             </div>
-            <!-- End Page-content -->
-            @include('layouts.footer')
-        </div>
-        <!-- end main content-->
+            <!-- end main content-->
     </div>
     <!-- END layout-wrapper -->
 
-    <!-- Right Sidebar -->
-   {{--  @include('layouts.right-sidebar') --}}
-    <!-- /Right-bar -->
+    <!-- customizer -->
+    @include('layouts.right-sidebar')
 
-    <!-- JAVASCRIPT -->
+    <!-- vendor-scripts -->
     @include('layouts.vendor-scripts')
+
 </body>
 
 </html>

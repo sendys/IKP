@@ -1,15 +1,9 @@
 <!-- JAVASCRIPT -->
- <script src="{{ URL::asset('/assets/libs/jquery/jquery.min.js')}}"></script>
- <script src="{{ URL::asset('/assets/libs/bootstrap/bootstrap.min.js')}}"></script>
- <script src="{{ URL::asset('/assets/libs/metismenu/metismenu.min.js')}}"></script>
- <script src="{{ URL::asset('/assets/libs/simplebar/simplebar.min.js')}}"></script>
- <script src="{{ URL::asset('/assets/libs/node-waves/node-waves.min.js')}}"></script>
- <script src="{{ URL::asset('/assets/libs/waypoints/waypoints.min.js')}}"></script>
- <script src="{{ URL::asset('/assets/libs/jquery-counterup/jquery-counterup.min.js')}}"></script>
-
- @yield('script')
-
- <!-- App js -->
- <script src="{{ URL::asset('/assets/js/app.min.js')}}"></script>
- 
- @yield('script-bottom')
+<script src="{{ URL::asset('build/libs/jquery/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/metismenu/metisMenu.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/simplebar/simplebar.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/node-waves/waves.min.js') }}"></script>
+<!-- Icon -->
+<script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+@yield('scripts')
