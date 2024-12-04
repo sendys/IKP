@@ -293,54 +293,61 @@
                     <div class="card-header border-0 align-items-center d-flex pb-0">
                         <h4 class="card-title mb-0 flex-grow-1">Rating Transaction</h4>
                         <div>
-                            <div class="d-flex justify-content-between">
-                                <div class="input-group me-2">
-                                    <input type="text" class="form-control" placeholder="dd M, yyyy"
-                                        data-date-format="dd M, yyyy" data-provide="datepicker" data-date-autoclose="true">
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div><!-- input-group -->
-                                <div class="input-group ms-2">
-                                    <input type="text" class="form-control" placeholder="dd M, yyyy"
-                                        data-date-format="dd M, yyyy" data-provide="datepicker" data-date-autoclose="true">
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div><!-- input-group -->
-                            </div>
+                            <form method="GET" action="{{ route('dashboard') }}">
+                                <div class="d-flex justify-content-between">
+                                    <div class="input-group me-2">
+                                        <input type="text" class="form-control" name="start_date" id="start_date" value="{{ $startDate->format('Y-m-d') }}"
+                                            data-date-format="yyyy-m-dd" data-provide="datepicker" data-date-autoclose="true">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div><!-- input-group -->
+                                    <div class="input-group ms-2">
+                                        <input type="text" class="form-control" name="end_date" id="end_date" value="{{ $endDate->format('Y-m-d') }}"
+                                            data-date-format="yyyy-m-dd" data-provide="datepicker" data-date-autoclose="true">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div><!-- input-group -->
+
+                                    <button class="btn btn-primary ms-2" id="filterButton">Filter</button>
+                                </div>
+                            </form>
 
                         </div>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive">
-                            <table class="table align-middle table-nowrap mb-0">
+                            <table id="data-table" class="table align-middle table-nowrap mb-0">
                                 <thead>
                                     <tr>
-                                        <th style="width: 20px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th>
                                         <th>#</th>
                                         <th>Tanggal</th>
-                                        <th>Nama</th>
-                                        <th>Rating</th>
+                                        <th>Nama Karyawan</th>
                                         <th>Sangat Puas</th>
                                         <th>Puas</th>
                                         <th>Tidak Puas</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $item)
+                                    @if($data->isEmpty())
                                         <tr>
-                                            <td>{{ $item->tanggal }}</td>
-                                            <td>{{ $item->name }}</td>
-
+                                            <td colspan="6">No data found.</td>
                                         </tr>
-                                    @endforeach
+                                    @else
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @foreach($data as $item)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m') }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>{{ $item->sangat_puas }}</td>
+                                                <td>{{ $item->puas }}</td>
+                                                <td>{{ $item->tidak_puas }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
 
                                 </tbody>
                             </table>
-                        </div>
                         <!-- end table-responsive -->
                     </div>
                 </div>
@@ -366,29 +373,4 @@
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
 
-       {{--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $.ajax({
-                    url: "{{ route('filter') }}",
-                    method: "GET",
-                    success: function(response) {
-                        let rows = '';
-                        response.forEach(function(item) {
-                            rows += `
-                                <tr>
-                                    <td>${item.tanggal}</td>
-                                    <td>${item.nama}</td>
-                                    <td>rating</td>
-                                </tr>
-                            `;
-                        });
-                        $('#data-table').html(rows);
-                    },
-                    error: function(error) {
-                        console.error("Terjadi kesalahan:", error);
-                    }
-                });
-            });
-        </script> --}}
     @endsection

@@ -24,7 +24,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    Route::get('/index',[App\Http\Controllers\AdminController::class, 'index'])->name('index');
+    Route::get('/dashboard',[App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
     Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 

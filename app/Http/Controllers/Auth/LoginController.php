@@ -22,7 +22,7 @@ class LoginController extends Controller
             $user = Auth::user();
 
             if ($user->role == 'admin') {
-                return redirect()->intended('/admin/dashboard');
+                return redirect()->intended('/dashboard');
             } elseif ($user->role == 'user') {
                 return redirect()->intended('/ikp/dashboard');
             } else {

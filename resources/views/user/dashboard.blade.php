@@ -106,7 +106,7 @@
                     title: 'Berhasil!',
                     text: response.message,
                     icon: 'success',
-                    showConfirmButton: false,
+                    showConfirmButton: true,
                     timer: 1500,
                     timerProgressBar: true,
                     //confirmButtonText: 'OK'
