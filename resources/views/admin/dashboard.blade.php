@@ -38,8 +38,8 @@
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2"> Total Earnings</p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">34,123.20 <span class="text-muted font-size-16">USD</span>
+                                <p class="text-muted text-truncate font-size-15 mb-2"> Sangat Puas</p>
+                                <h3 class="fs-4 flex-grow-1 mb-3"> {{ $totsangatpuas }} <span class="text-muted font-size-16">Record</span>
                                 </h3>
                                 <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -74,8 +74,8 @@
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2"> Total Orders</p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">63,234 <span class="text-muted font-size-16">NOU</span>
+                                <p class="text-muted text-truncate font-size-15 mb-2"> Puas</p>
+                                <h3 class="fs-4 flex-grow-1 mb-3">{{ $totpuas }} <span class="text-muted font-size-16">Record</span>
                                 </h3>
                                 <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-danger text-danger font-size-12 fw-normal me-1"><i
@@ -110,8 +110,8 @@
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2"> Today Visitor</p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">425,34 <span class="text-muted font-size-16">NOU</span>
+                                <p class="text-muted text-truncate font-size-15 mb-2"> Tidak Puas</p>
+                                <h3 class="fs-4 flex-grow-1 mb-3">{{ $tottidakpuas }} <span class="text-muted font-size-16">Record</span>
                                 </h3>
                                 <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -146,9 +146,9 @@
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2"> Total Expense</p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">26,482.46 <span
-                                        class="text-muted font-size-16">USD</span></h3>
+                                <p class="text-muted text-truncate font-size-15 mb-2"> Total Rating</p>
+                                <h3 class="fs-4 flex-grow-1 mb-3">{{ $tot }} <span
+                                        class="text-muted font-size-16">Record</span></h3>
                                 <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 23% Increase</span> vs last month</p>
@@ -305,6 +305,10 @@
                                             data-date-format="yyyy-m-dd" data-provide="datepicker" data-date-autoclose="true">
                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div><!-- input-group -->
+                                    <div class="input-group ms-3">
+                                        <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" value="{{ request('search_keyword') }}"
+                                        placeholder="Search...">
+                                    </div>
 
                                     <button class="btn btn-primary ms-2" id="filterButton">Filter</button>
                                 </div>
@@ -312,6 +316,8 @@
 
                         </div>
                     </div>
+                    <br>
+
                     <div class="card-body pt-2">
                         <div class="table-responsive">
                             <table id="data-table" class="table align-middle table-nowrap mb-0">
@@ -328,7 +334,7 @@
                                 <tbody>
                                     @if($data->isEmpty())
                                         <tr>
-                                            <td colspan="6">No data found.</td>
+                                            <td colspan="5" style="text-align: center;">No data found.</td>
                                         </tr>
                                     @else
                                         @php

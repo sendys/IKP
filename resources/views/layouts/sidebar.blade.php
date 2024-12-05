@@ -115,7 +115,7 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="{{ route('admin.dashboard') }}" class="waves-effect">
+                    <a href="{{ route('dashboard') }}" class="waves-effect">
                         <i class="uim uim-airplay"></i><span class="badge rounded-pill bg-success float-end">3</span>
                         <span>Dashboard</span>
                     </a>
