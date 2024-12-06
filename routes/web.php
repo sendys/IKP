@@ -12,11 +12,13 @@ use App\Livewire\Rating;
     return view('auth.login'); // Or your custom login logic
 })->name('login'); */
 
+
+
+Auth::routes();
+
 Route::get('/', function () {
     return redirect('/login');
 });
-
-Auth::routes();
 
 // Rute Admin
 Route::middleware(['auth', 'role:admin'])->group(function () {

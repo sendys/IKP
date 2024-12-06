@@ -12,16 +12,30 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         // Ambil tanggal mulai dan tanggal akhir dari request, atau set default jika tidak ada
+        $page = $request->input('page', 1);
+        $perPage = $request->input('perPage', 10);
+        $search = $request->input('search', '');
+
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-        $searchKeyword = $request->input('search_keyword');
 
         // Pastikan format tanggal yang diterima valid
         $startDate = Carbon::parse($startDate)->startOfDay();
         $endDate = Carbon::parse($endDate)->endOfDay();
 
-        //Tampilkan data berdasarkan nama karyawan
-        $data = DB::table('penilaians as a')
+        if (empty($search)) {
+            $query = DB::table('penilaians as a')
+                ->join('users as b', 'a.user_id', '=', 'b.id')
+                ->select(
+                    DB::raw('MIN(a.created_at) as tanggal'),
+                    DB::raw('MIN(b.name) as name'),
+                    DB::raw('SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) as sangat_puas'),
+                    DB::raw('SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) as puas'),
+                    DB::raw('SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END) as tidak_puas')
+                )
+                ->whereBetween(DB::raw('DATE(a.created_at)'), [$startDate, $endDate]);
+        }else{
+            $query = DB::table('penilaians as a')
                 ->join('users as b', 'a.user_id', '=', 'b.id')
                 ->select(
                     DB::raw('MIN(a.created_at) as tanggal'),
@@ -31,12 +45,23 @@ class AdminController extends Controller
                     DB::raw('SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END) as tidak_puas')
                 )
                 ->whereBetween(DB::raw('DATE(a.created_at)'), [$startDate, $endDate])
-                ->where('b.name', 'like', '%' . $searchKeyword . '%')
-                ->groupBy('a.user_id')
-                ->orderBy('a.id')
-                ->get();
+                ->where('b.name', 'LIKE', '%' . $search . '%');
+        }
 
-        //dd($data);
+        $total = $query->count();
+        $data = $query
+            ->skip(($page - 1) * $perPage)
+            ->take($perPage)
+            ->groupBy('a.user_id')
+            ->orderBy('a.id')
+            ->get();
+
+        $pagination = [
+            'total' => $total,
+            'per_page' => $perPage,
+            'current_page' => $page,
+            'last_page' => ceil($total / $perPage),
+        ];
 
         //Count Total Sangat Puas
         $sangatpuas = DB::table('penilaians as a')
@@ -94,6 +119,6 @@ class AdminController extends Controller
                 $tot = $total->total;
             }
 
-        return view('admin.dashboard', compact('data', 'startDate', 'endDate', 'searchKeyword', 'totsangatpuas', 'totpuas', 'tottidakpuas', 'tot'));
+        return view('admin.dashboard', compact('data', 'startDate', 'endDate', 'totsangatpuas', 'totpuas', 'tottidakpuas', 'tot','pagination', 'search', 'perPage', 'page', 'total'));
     }
 }

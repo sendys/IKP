@@ -197,10 +197,12 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-xl-8 audiences-border">
-                                <div id="column-chart" class="apex-charts"></div>
+                                {{-- <div id="column-chart" class="apex-charts"></div> --}}
+                                <canvas id="ratingChart" width="400" height="200"></canvas>
                             </div>
                             <div class="col-xl-4">
-                                <div id="donut-chart" class="apex-charts"></div>
+                               {{--  <div id="donut-chart" class="apex-charts"></div> --}}
+                               <canvas id="ratingChart1" width="400" height="400"></canvas>
                             </div>
                         </div>
                     </div>
@@ -306,11 +308,12 @@
                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div><!-- input-group -->
                                     <div class="input-group ms-3">
-                                        <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" value="{{ request('search_keyword') }}"
+                                        <input type="text" class="form-control" id="search" name="search" value="{{ $search }}"
                                         placeholder="Search...">
                                     </div>
 
                                     <button class="btn btn-primary ms-2" id="filterButton">Filter</button>
+                                    <button type="button" class="btn btn-primary ms-1" id="clearButton">Clear</button>
                                 </div>
                             </form>
 
@@ -378,5 +381,112 @@
         <script src="{{ URL::asset('build/js/pages/form-advanced.init.js') }}"></script>
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                    document.getElementById('start_date').addEventListener('change', function () {
+                        console.log('Start date changed!');
+                        document.querySelector('form').submit();
+                    });
+
+                    document.getElementById('end_date').addEventListener('change', function () {
+                        console.log('End date changed!');
+                        document.querySelector('form').submit();
+                    });
+
+                    document.getElementById('clearButton').addEventListener('click', function () {
+                        // Clear all input fields
+                        document.getElementById('start_date').value = '';
+                        document.getElementById('end_date').value = '';
+                        document.getElementById('search').value = '';
+
+                        // Optionally submit the form to clear the filters
+                        document.querySelector('form').submit();
+                    });
+            });
+
+            const ctx = document.getElementById('ratingChart').getContext('2d');
+            const chartData = @json($data);
+
+            const labels = chartData.map(item => item.name);
+            const sangatPuas = chartData.map(item => item.sangat_puas);
+            const puas = chartData.map(item => item.puas);
+            const tidakPuas = chartData.map(item => item.tidak_puas);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Sangat Puas',
+                            data: sangatPuas,
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        },
+                        {
+                            label: 'Puas',
+                            data: puas,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        },
+                        {
+                            label: 'Tidak Puas',
+                            data: tidakPuas,
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            });
+
+            //pie
+            const ctx1 = document.getElementById('ratingChart1').getContext('2d');
+            const chartData1 = @json($data);
+
+            // Sum up the ratings data
+            const sangatPuas1 = chartData1.reduce((sum, item) => sum + item.sangat_puas, 0);
+            const puas1 = chartData1.reduce((sum, item) => sum + item.puas, 0);
+            const tidakPuas1 = chartData1.reduce((sum, item) => sum + item.tidak_puas, 0);
+
+            new Chart(ctx1, {
+                type: 'pie',  // Change to pie chart
+                data: {
+                    labels: ['Sangat Puas', 'Puas', 'Tidak Puas'],
+                    datasets: [{
+                        label: 'Penilaian Pengguna',
+                        data: [sangatPuas1, puas1, tidakPuas1],
+                        backgroundColor: ['green', 'blue', 'red'],
+                        borderColor: ['darkgreen', 'darkblue', 'darkred'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        </script>
 
     @endsection
