@@ -39,7 +39,10 @@
                                             In</button>
                                 </form>
                             </div>
-
+                            <div class="mt-4 text-center">
+                                <p class="mb-0">Don't have an account ? <a href="{{ route('register') }}"
+                                        class="fw-medium text-primary"> Register </a> </p>
+                            </div>
                         </div>
                     </div>
 

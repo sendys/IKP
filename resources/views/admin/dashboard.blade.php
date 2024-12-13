@@ -11,7 +11,13 @@
     <link href="{{ URL::asset('build/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('page-title')
-    Dashboard
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Dashboard</h4>
+        </div>
+    </div>
+</div>
 @endsection
 @section('body')
 
@@ -175,7 +181,7 @@
         <!-- END ROW -->
 
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex pb-0">
                         <h4 class="card-title mb-0 flex-grow-1">Audiences Metrics</h4>
@@ -196,20 +202,19 @@
                     </div>
                     <div class="card-body">
                         <div class="row align-items-center">
-                            <div class="col-xl-8 audiences-border">
-                                {{-- <div id="column-chart" class="apex-charts"></div> --}}
-                                <canvas id="ratingChart" width="400" height="200"></canvas>
+                            <div class="col-xl-12 audiences-border">
+                               {{--  <div id="column-chart" class="apex-charts"></div> --}}
+                               <div id="chart" style="width: 800px; height: 342px;"></div>
                             </div>
-                            <div class="col-xl-4">
-                               {{--  <div id="donut-chart" class="apex-charts"></div> --}}
-                               <canvas id="ratingChart1" width="400" height="400"></canvas>
-                            </div>
+                           {{--  <div class="col-xl-4">
+                                <canvas id="ratingChart" width="400" height="400"></canvas>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-xl-4">
+           {{--  <div class="col-xl-4">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex pb-0">
                         <h4 class="card-title mb-0 flex-grow-1">Source of Purchases</h4>
@@ -285,7 +290,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <!-- END ROW -->
 
@@ -295,7 +300,7 @@
                     <div class="card-header border-0 align-items-center d-flex pb-0">
                         <h4 class="card-title mb-0 flex-grow-1">Rating Transaction</h4>
                         <div>
-                            <form method="GET" action="{{ route('dashboard') }}">
+                            <form method="GET" id="filterForm">
                                 <div class="d-flex justify-content-between">
                                     <div class="input-group me-2">
                                         <input type="text" class="form-control" name="start_date" id="start_date" value="{{ $startDate->format('Y-m-d') }}"
@@ -313,13 +318,17 @@
                                     </div>
 
                                     <button class="btn btn-primary ms-2" id="filterButton">Filter</button>
-                                    <button type="button" class="btn btn-primary ms-1" id="clearButton">Clear</button>
+                                    <button class="btn btn-primary ms-1" id="clearButton">Clear</button>
+
                                 </div>
                             </form>
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-success ms-1" id="exportButton">Export</button>
+                            </div>
 
                         </div>
                     </div>
-                    <br>
+                    <p>
 
                     <div class="card-body pt-2">
                         <div class="table-responsive">
@@ -381,110 +390,103 @@
         <script src="{{ URL::asset('build/js/pages/form-advanced.init.js') }}"></script>
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         <script>
-            $(document).ready(function () {
-                    document.getElementById('start_date').addEventListener('change', function () {
-                        console.log('Start date changed!');
-                        document.querySelector('form').submit();
-                    });
 
-                    document.getElementById('end_date').addEventListener('change', function () {
-                        console.log('End date changed!');
-                        document.querySelector('form').submit();
-                    });
+            var chartDom = document.getElementById('chart');
+            var myChart = echarts.init(chartDom);
 
-                    document.getElementById('clearButton').addEventListener('click', function () {
-                        // Clear all input fields
-                        document.getElementById('start_date').value = '';
-                        document.getElementById('end_date').value = '';
-                        document.getElementById('search').value = '';
-
-                        // Optionally submit the form to clear the filters
-                        document.querySelector('form').submit();
-                    });
-            });
-
-            const ctx = document.getElementById('ratingChart').getContext('2d');
-            const chartData = @json($data);
-
-            const labels = chartData.map(item => item.name);
-            const sangatPuas = chartData.map(item => item.sangat_puas);
-            const puas = chartData.map(item => item.puas);
-            const tidakPuas = chartData.map(item => item.tidak_puas);
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Sangat Puas',
-                            data: sangatPuas,
-                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        },
-                        {
-                            label: 'Puas',
-                            data: puas,
-                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        },
-                        {
-                            label: 'Tidak Puas',
-                            data: tidakPuas,
-                            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        },
-                    ],
+            var option = {
+                //title: { text: 'Penilaian Pelanggan' },
+                tooltip: {},
+                legend: { data: ['Sangat Puas', 'Puas', 'Tidak Puas'] },
+                xAxis: {
+                    type: 'category',
+                    data: @json($chartData['categories'])
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'top' },
+                yAxis: { type: 'value' },
+                series: [
+                    {
+                        name: 'Sangat Puas',
+                        type: 'bar',
+                        data: @json($chartData['sangat_puas'])
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                        },
+                    {
+                        name: 'Puas',
+                        type: 'bar',
+                        data: @json($chartData['puas'])
                     },
-                },
-            });
-
-            //pie
-            const ctx1 = document.getElementById('ratingChart1').getContext('2d');
-            const chartData1 = @json($data);
-
-            // Sum up the ratings data
-            const sangatPuas1 = chartData1.reduce((sum, item) => sum + item.sangat_puas, 0);
-            const puas1 = chartData1.reduce((sum, item) => sum + item.puas, 0);
-            const tidakPuas1 = chartData1.reduce((sum, item) => sum + item.tidak_puas, 0);
-
-            new Chart(ctx1, {
-                type: 'pie',  // Change to pie chart
-                data: {
-                    labels: ['Sangat Puas', 'Puas', 'Tidak Puas'],
-                    datasets: [{
-                        label: 'Penilaian Pengguna',
-                        data: [sangatPuas1, puas1, tidakPuas1],
-                        backgroundColor: ['green', 'blue', 'red'],
-                        borderColor: ['darkgreen', 'darkblue', 'darkred'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top'
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw;
-                                }
-                            }
-                        }
+                    {
+                        name: 'Tidak Puas',
+                        type: 'bar',
+                        data: @json($chartData['tidak_puas'])
                     }
+                ]
+            };
+
+            myChart.setOption(option);
+
+            //
+            $(document).ready(function () {
+
+            $('#start_date, #end_date, #search').on('changeDate', function () {
+                fetchFilteredData();
+            });
+
+                function fetchFilteredData() {
+                    // Serialize form data
+                    let formData = $('#filterForm').serialize();
+
+                    // Send AJAX request
+                    $.ajax({
+                        url: '/dashboard',
+                        method: 'GET',
+                        data: formData,
+                        beforeSend: function () {
+                            console.log('Loading data...');
+                        },
+                        success: function (response) {
+                            // Update the content section
+                            $('#content').html(response);
+                        },
+                        error: function (xhr) {
+                            console.error('Error fetching data:', xhr.responseText);
+                        }
+                    });
                 }
+
+                document.getElementById('filterButton').addEventListener('click', function(event) {
+                const startDate = new Date(document.getElementById('start_date').value);
+                const endDate = new Date(document.getElementById('end_date').value);
+                    if (startDate > endDate) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Invalid Tanggal',
+                            text: 'Tanggal awal tidak boleh lebih besar dari tanggal akhir.',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            });
+
+            document.querySelector('form').addEventListener('submit', function (event) {
+                var startDate = document.getElementById('start_date').value;
+                var endDate = document.getElementById('end_date').value;
+
+                if (!startDate || !endDate) {
+                    event.preventDefault(); // Prevent form submission
+                    alert('Please select both start and end dates.');
+                }
+            });
+
+
+            document.getElementById('clearButton').addEventListener('click', function() {
+                document.getElementById('search').value = '';
             });
 
         </script>
