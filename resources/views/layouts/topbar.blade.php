@@ -26,7 +26,7 @@
             <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn" id="vertical-menu-btn">
                 <i class="ri-menu-2-line align-middle"></i>
             </button>
-            
+
           <!-- start page title -->
           <div class="page-title-box align-self-center d-none d-md-block">
             <h4 class="page-title mb-0">@yield('page-title')</h4>
@@ -51,7 +51,7 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-search-dropdown">
-                    
+
                     <form class="p-3">
                         <div class="mb-3 m-0">
                             <div class="input-group">
@@ -65,13 +65,13 @@
                 </div>
             </div>
 
-            <div class="dropdown d-none d-sm-inline-block">
+           {{--  <div class="dropdown d-none d-sm-inline-block">
                 <button type="button" class="btn header-item waves-effect"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="" src="{{ URL::asset('build/images/flags/us.jpg') }}" alt="Header Language" height="16">
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
-                    
+
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <img src="{{ URL::asset('build/images/flags/spain.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
@@ -92,7 +92,7 @@
                         <img src="{{ URL::asset('build/images/flags/russia.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                     </a>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect"
@@ -246,7 +246,7 @@
                     <i class="ri-settings-2-line"></i>
                 </button>
             </div>
-            
+
         </div>
     </div>
 </header>

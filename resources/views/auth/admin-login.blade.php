@@ -13,7 +13,7 @@
                                 <p class="text-muted">MACCLEANING.ID</p>
                             </div>
                             <div class="p-2 mt-4">
-                                <form method="POST" action="{{ route('login') }}">
+                                <form method="POST" action="{{ route('admin.login') }}">
                                     @csrf
 
                                     <div class="mb-3">
@@ -39,10 +39,10 @@
                                             In</button>
                                 </form>
                             </div>
-                            {{-- <div class="mt-4 text-center">
+                            <div class="mt-4 text-center">
                                 <p class="mb-0">Don't have an account ? <a href="#"
                                         class="fw-medium text-primary"> Register </a> </p>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
 

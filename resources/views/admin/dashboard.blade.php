@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('title')
     Dashboard
 @endsection
@@ -181,7 +182,7 @@
         <!-- END ROW -->
 
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex pb-0">
                         <h4 class="card-title mb-0 flex-grow-1">Audiences Metrics</h4>
@@ -202,22 +203,23 @@
                     </div>
                     <div class="card-body">
                         <div class="row align-items-center">
-                            <div class="col-xl-12 audiences-border">
+                            <div class="col-xl-6 audiences-border">
                                {{--  <div id="column-chart" class="apex-charts"></div> --}}
-                               <div id="chart" style="width: 800px; height: 342px;"></div>
+                               <div id="chart" class="apex-charts" style="width: 500px;height: 322px;"></div>
+
                             </div>
-                           {{--  <div class="col-xl-4">
-                                <canvas id="ratingChart" width="400" height="400"></canvas>
-                            </div> --}}
+                           <div class="col-xl-4">
+                               {{--  <div id="chart-container" style="width: 800px; height: 342px;"></div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-           {{--  <div class="col-xl-4">
+            <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex pb-0">
-                        <h4 class="card-title mb-0 flex-grow-1">Source of Purchases</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Source of Audiences</h4>
                         <div>
                             <div class="dropdown">
                                 <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
@@ -236,14 +238,15 @@
                         </div>
                     </div>
                     <div class="card-body pt-0">
-                        <div id="social-source" class="apex-charts"></div>
+                        {{-- <div id="social-source" class="apex-charts"></div> --}}
+                        <div id="chart-container" class="apex-charts" style="height: 300px;"></div>
                         <div class="social-content text-center">
-                            <p class="text-uppercase mb-1">Total Sales</p>
-                            <h3 class="mb-0">5,685</h3>
+                            <p class="text-uppercase mb-1">Total Rating</p>
+                            <h3 class="mb-0">{{ $tot }}</h3>
                         </div>
                         <p class="text-muted text-center w-75 mx-auto mt-4 mb-0">Magnis dis parturient montes
                             nascetur ridiculus tincidunt lobortis.</p>
-                        <div class="row gx-4 mt-1">
+                        {{-- <div class="row gx-4 mt-1">
                             <div class="col-md-4">
                                 <div class="mt-4">
                                     <div class="progress" style="height: 7px;">
@@ -287,17 +290,17 @@
                                     <h4 class="mt-1 mb-0 font-size-20">85,745</h4>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
         <!-- END ROW -->
 
-        <div class="row">
-            <div class="col-xl-12">
+       {{--  <div class="row">
+            <div class="col-12">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                    <div class="card-header border-0 align-items-center d-flex pb-0 flex-wrap">
                         <h4 class="card-title mb-0 flex-grow-1">Rating Transaction</h4>
                         <div>
                             <form method="GET" id="filterForm">
@@ -313,19 +316,16 @@
                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div><!-- input-group -->
                                     <div class="input-group ms-3">
+
                                         <input type="text" class="form-control" id="search" name="search" value="{{ $search }}"
                                         placeholder="Search...">
                                     </div>
 
-                                    <button class="btn btn-primary ms-2" id="filterButton">Filter</button>
-                                    <button class="btn btn-primary ms-1" id="clearButton">Clear</button>
-
+                                    <button class="btn btn-primary ms-2" id="filterButton"><i class="ri-search-line align-bottom me-1"></i>Filter</button>
+                                    <button class="btn btn-primary ms-1" id="clearButton"><i class="ri-restart-line align-bottom me-1"></i>Reset</button>
+                                    <button type="button" class="btn btn-primary ms-1" onclick="generateExportLink()"><i class="ri-file-excel-line align-bottom me-1"></i>Export</button>
                                 </div>
                             </form>
-                            <div class="d-flex justify-content-between">
-                                <button class="btn btn-success ms-1" id="exportButton">Export</button>
-                            </div>
-
                         </div>
                     </div>
                     <p>
@@ -336,41 +336,148 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Tanggal</th>
+                                        <th>Periode</th>
                                         <th>Nama Karyawan</th>
-                                        <th>Sangat Puas</th>
-                                        <th>Puas</th>
-                                        <th>Tidak Puas</th>
+                                        <th class="text-center">Sangat Puas</th>
+                                        <th class="text-center">Puas</th>
+                                        <th class="text-center">Tidak Puas</th>
+                                        <th class="text-center">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                    @php $grandTotal = 0; @endphp
                                     @if($data->isEmpty())
                                         <tr>
-                                            <td colspan="5" style="text-align: center;">No data found.</td>
+                                            <td colspan="7" style="text-align: center;">No data found.</td>
                                         </tr>
                                     @else
                                         @php
                                             $no = 1;
                                         @endphp
+
                                         @foreach($data as $item)
+                                            @php $grandTotal += $item->ctotal; @endphp
                                             <tr>
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m') }}</td>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->sangat_puas }}</td>
-                                                <td>{{ $item->puas }}</td>
-                                                <td>{{ $item->tidak_puas }}</td>
+                                                <td class="text-center">{{ $item->sangat_puas }} </td>
+                                                <td class="text-center">{{ $item->puas }} </td>
+                                                <td class="text-center">{{ $item->tidak_puas }} </td>
+                                                <td class="text-center">{{ $item->ctotal }} </td>
                                             </tr>
                                         @endforeach
                                     @endif
 
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6" class="text-right"><strong>Total:</strong></td>
+                                        <td class="text-center"><strong>{{ $grandTotal }}</strong></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         <!-- end table-responsive -->
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-0 align-items-center d-flex pb-0 flex-wrap">
+                        <h4 class="card-title mb-0 flex-grow-1">Rating Transaction</h4>
+                        <div class="w-100 w-md-auto">
+                            <br>
+                            <form method="GET" id="filterForm">
+                                <div class="row g-2">
+                                    <div class="col-12 col-md-auto">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="start_date" id="start_date"
+                                                value="{{ $startDate->format('Y-m-d') }}"
+                                                data-date-format="yyyy-m-dd" data-provide="datepicker"
+                                                data-date-autoclose="true">
+                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-auto">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="end_date" id="end_date"
+                                                value="{{ $endDate->format('Y-m-d') }}"
+                                                data-date-format="yyyy-m-dd" data-provide="datepicker"
+                                                data-date-autoclose="true">
+                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-auto">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="search" name="search"
+                                                value="{{ $search }}" placeholder="Search...">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-auto d-flex gap-1">
+                                        <button class="btn btn-primary btn-sm waves-effect waves-light" id="filterButton"><i class="ri-search-line align-bottom me-1"></i>Filter</button>
+                                        <button class="btn btn-primary btn-sm waves-effect waves-light" id="clearButton"><i class="ri-restart-line align-bottom me-1"></i>Reset</button>
+                                        <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="generateExportLink()">
+                                            <i class="ri-file-excel-line align-bottom me-1"></i>Export
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card-body pt-2">
+                        <div class="table-responsive">
+                            <table id="data-table" class="table align-middle table-nowrap mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Periode</th>
+                                        <th>Nama Karyawan</th>
+                                        <th class="text-center">Sangat Puas</th>
+                                        <th class="text-center">Puas</th>
+                                        <th class="text-center">Tidak Puas</th>
+                                        <th class="text-center">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php $grandTotal = 0; @endphp
+                                    @if($data->isEmpty())
+                                        <tr>
+                                            <td colspan="7" class="text-center">No data found.</td>
+                                        </tr>
+                                    @else
+                                        @php $no = 1; @endphp
+                                        @foreach($data as $item)
+                                            @php $grandTotal += $item->ctotal; @endphp
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m') }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td class="text-center">{{ $item->sangat_puas }} </td>
+                                                <td class="text-center">{{ $item->puas }} </td>
+                                                <td class="text-center">{{ $item->tidak_puas }} </td>
+                                                <td class="text-center">{{ $item->ctotal }} </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6" class="text-right"><strong>Total:</strong></td>
+                                        <td class="text-center"><strong>{{ $grandTotal }}</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <!-- END ROW -->
     @endsection
     @section('scripts')
@@ -433,9 +540,9 @@
             //
             $(document).ready(function () {
 
-            $('#start_date, #end_date, #search').on('changeDate', function () {
-                fetchFilteredData();
-            });
+                $('#start_date, #end_date, #search').on('changeDate', function () {
+                    fetchFilteredData();
+                });
 
                 function fetchFilteredData() {
                     // Serialize form data
@@ -472,23 +579,74 @@
                         });
                     }
                 });
+
+                const today = '{{ \Carbon\Carbon::now()->toDateString() }}';
+                var urld = '{{ route('dashboard') }}';
+
+                $('#clearButton').on('click', function() {
+                    $('#start_date').val(today);
+                    $('#end_date').val(today);
+                    $('#search').val('');
+
+                    window.location.href = urld;
+                });
+
             });
 
-            document.querySelector('form').addEventListener('submit', function (event) {
+            function generateExportLink() {
                 var startDate = document.getElementById('start_date').value;
                 var endDate = document.getElementById('end_date').value;
 
-                if (!startDate || !endDate) {
-                    event.preventDefault(); // Prevent form submission
+                if (startDate && endDate) {
+                    var url = '{{ route('export_data') }}?start_date=' + startDate + '&end_date=' + endDate;
+                    window.location.href = url;
+                } else {
                     alert('Please select both start and end dates.');
                 }
-            });
+            }
 
+            /* Grafik Pie */
+            var data = @json($data);
+            // Format Data untuk Grafik Pie
+            var chartPie = [
+                { value: data.reduce((sum, item) => sum + parseFloat(item.sangat_puas), 0), name: 'Sangat Puas' },
+                { value: data.reduce((sum, item) => sum + parseFloat(item.puas), 0), name: 'Puas' },
+                { value: data.reduce((sum, item) => sum + parseFloat(item.tidak_puas), 0), name: 'Tidak Puas' },
+            ];
 
-            document.getElementById('clearButton').addEventListener('click', function() {
-                document.getElementById('search').value = '';
+            document.addEventListener('DOMContentLoaded', function () {
+                // Inisialisasi elemen
+                var chartDom = document.getElementById('chart-container');
+                var myChart = echarts.init(chartDom);
+
+                var option = {
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    legend: {
+                        top: '5%',
+                        left: 'center'
+                    },
+                    series: [
+                        {
+                            name: 'Penilaian',
+                            type: 'pie',
+                            radius: ['40%', '70%'],
+                            center: ['50%', '70%'],
+                            startAngle: 180,
+                            endAngle: 360,
+                            data: chartPie
+                        }
+                    ]
+                };
+
+                myChart.setOption(option);
+
+                // Responsif jika ukuran layar berubah
+                window.addEventListener('resize', function () {
+                    myChart.resize();
+                });
             });
 
         </script>
-
     @endsection

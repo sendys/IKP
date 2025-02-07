@@ -1,27 +1,33 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Penilaian;
-use App\Livewire\Rating;
+use App\Http\Controllers\Auth\LoginController;
 
-/* Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth'); */
+// Frontend
+Route::middleware('guest:web')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
 
-/* Route::get('/login', function () {
-    return view('auth.login'); // Or your custom login logic
-})->name('login'); */
-
-
-
-Auth::routes();
-
-Route::get('/', function () {
-    return redirect('/login');
 });
 
-// Rute Admin
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth:web', 'role:user'])->group(function () {
+    
+    Route::get('/user/dashboard', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('user.dashboard');
+    Route::post('/penilaian/store', [App\Http\Controllers\PenilaianController::class, 'store'])->name('penilaian.store');
+    Route::get('/penilaian/{id}', [App\Http\Controllers\PenilaianController::class, 'show']);
+
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
+
+});
+
+// Backend
+Route::prefix('admin')->middleware('guest:admin')->group(function () {
+    Route::get('/login', [LoginController::class, 'showAdminLoginForm'])->name('admin.login');
+    Route::post('/login', [LoginController::class, 'adminLogin']);
+
+});
+
+Route::prefix('admin')->middleware(['auth:admin', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
@@ -37,23 +43,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/reset/{id}', [App\Http\Controllers\UserController::class, 'showresetpassword'])->name('users.reset');
     Route::put('/reset/password/{id}', [App\Http\Controllers\UserController::class, 'resetpassword'])->name('user.update-password');
+    Route::get('/export-penilaian', [App\Http\Controllers\AdminController::class, 'exportToExcel'])->name('export_data');
 
-    Route::get('/export-penilaian', [App\Http\Controllers\UserController::class, 'exportToExcel']);
+    Route::get('/label/edit/{id}', [App\Http\Controllers\AdminController::class, 'edit'])->name('label.edit');
+    Route::put('/label/update/{id}', [App\Http\Controllers\AdminController::class, 'update'])->name('label.update');
 
+    Route::post('/logout', [LoginController::class, 'adminLogout'])->name('admin.logout');
 });
 
-// Rute User
-Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/ikp/dashboard', function () {
-        return view('user.dashboard');
-    })->name('user.dashboard');
-
-    Route::post('/penilaian/store', [App\Http\Controllers\PenilaianController::class, 'store'])->name('penilaian.store');
-
-    //Route::get('/rating', \App\Livewire\Rating::class)->name('livewire.rating');
-    //Route::get('/ikp/penilaian', \App\Livewire\RatingComponent::class)->name('penilaian');
-
-});
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout')->middleware('auth');

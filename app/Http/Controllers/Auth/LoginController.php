@@ -11,8 +11,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 class LoginController extends Controller
 {
 
-    use AuthenticatesUsers;
-
+    /* use AuthenticatesUsers;
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -38,7 +37,6 @@ class LoginController extends Controller
         ]);
     }
 
-
     public function logout(Request $request)
     {
 
@@ -47,6 +45,49 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login')->with('status', 'You have been logged out.');
+    } */
+
+    public function showLoginForm()
+    {
+        return view('auth.login'); // Form login frontend
     }
 
+    public function showAdminLoginForm()
+    {
+        return view('auth.admin-login'); // Form login admin
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('web')->attempt($credentials)) {
+            return redirect()->route('user.dashboard');
+        }
+
+        return back()->withErrors(['email' => 'Invalid credentials.']);
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->intended('/admin/dashboard');
+        }
+
+        return back()->withErrors(['email' => 'Invalid credentials.']);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+        return redirect('/login');
+    }
+
+    public function adminLogout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        return redirect('/admin/login');
+    }
 }

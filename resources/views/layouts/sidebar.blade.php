@@ -3,7 +3,7 @@
 
     <!-- LOGO -->
     <div class="navbar-brand-box">
-        <a href="index" class="logo logo-dark">
+        <a href="{{ route('dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{ URL::asset('build/images/logo-sm-dark.png') }}" alt="logo-sm-dark" height="24">
             </span>
@@ -12,7 +12,7 @@
             </span>
         </a>
 
-        <a href="index" class="logo logo-light">
+        <a href="{{ route('dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
                 <img src="{{ URL::asset('build/images/logo-sm-light.png') }}" alt="logo-sm-light" height="24">
             </span>
@@ -32,7 +32,7 @@
         <!--- Sidemenu -->
         <div id="sidebar-menu">
 
-            <div class="dropdown mx-3 sidebar-user user-dropdown select-dropdown">
+            {{-- <div class="dropdown mx-3 sidebar-user user-dropdown select-dropdown">
                 <button type="button" class="btn btn-light w-100 waves-effect waves-light border-0"
                     id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-flex align-items-center">
@@ -109,7 +109,8 @@
                         View More..
                     </a>
                 </div>
-            </div>
+            </div> --}}
+
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">Menu</li>
@@ -197,13 +198,13 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uim uim-sign-in-alt"></i>
-                        <span>Authentication</span>
+                        <span>Setting</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="auth-login">Login</a></li>
-                        <li><a href="{{ route('users.index') }}">Register</a></li>
-                        <li><a href="auth-recoverpw">Recover Password</a></li>
-                        <li><a href="auth-lock-screen">Lock Screen</a></li>
+                        <li><a href="{{ route('label.edit', 1) }}">Setting Label</a></li>
+                        <li><a href="{{ route('users.index') }}">User</a></li>
+                       {{--  <li><a href="auth-recoverpw">Recover Password</a></li>
+                        <li><a href="auth-lock-screen">Lock Screen</a></li> --}}
                     </ul>
                 </li>
 
@@ -225,7 +226,7 @@
                     </ul>
                 </li>
 
-                <li class="menu-title">Components</li>
+               {{--  <li class="menu-title">Components</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -356,7 +357,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
             </ul>
 
@@ -406,7 +407,7 @@
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                     class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
                     class="align-middle">Logout</span></a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
         </div>

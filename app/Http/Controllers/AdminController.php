@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Models\SettingLabel;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -26,6 +27,19 @@ class AdminController extends Controller
         $endDate = Carbon::parse($endDate)->endOfDay();
 
         if (empty($search)) {
+            /* DB::raw('ROUND((SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) /
+                        (SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) +
+                         SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) +
+                         SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END))) * 100,2) AS sangat_puas'),
+                    DB::raw('ROUND((SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) /
+                                    (SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) +
+                                    SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) +
+                                    SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END))) * 100,2) AS puas'),
+                    DB::raw('ROUND((SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END) /
+                        (SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) +
+                         SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) +
+                         SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END))) * 100,2) AS tidak_puas'), */
+
             $query = DB::table('penilaians as a')
                 ->join('users as b', 'a.user_id', '=', 'b.id')
                 ->select(
@@ -137,46 +151,63 @@ class AdminController extends Controller
 
     public function exportToExcel(Request $request)
     {
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+        ]);
 
-        // Pastikan format tanggal yang diterima valid
-        $startDate = Carbon::parse($startDate)->startOfDay();
-        $endDate = Carbon::parse($endDate)->endOfDay();
+        $startDate = Carbon::parse($request->input('start_date'))->startOfDay();
+        $endDate = Carbon::parse($request->input('end_date'))->endOfDay();
 
-        $query = DB::table('penilaians as a')
-                ->join('users as b', 'a.user_id', '=', 'b.id')
-                ->select(
-                    DB::raw('MIN(a.created_at) as tanggal'),
-                    DB::raw('MIN(b.name) as name'),
-                    DB::raw('SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) as sangat_puas'),
-                    DB::raw('SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) as puas'),
-                    DB::raw('SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END) as tidak_puas'),
-                    DB::raw('COUNT(a.id) as ctotal')
-                )
-                ->whereBetween(DB::raw('DATE(a.created_at)'), [$startDate, $endDate]);
+        $data = DB::table('penilaians as a')
+            ->join('users as b', 'a.user_id', '=', 'b.id')
+            ->select(
+                DB::raw('MIN(a.created_at) as tanggal'),
+                DB::raw('MIN(b.name) as name'),
+                DB::raw('SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) as sangat_puas'),
+                DB::raw('SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) as puas'),
+                DB::raw('SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END) as tidak_puas'),
+                DB::raw('COUNT(a.id) as ctotal')
+            )
+            ->whereBetween(DB::raw('DATE(a.created_at)'), [$startDate, $endDate])
+            ->groupBy('a.user_id')
+            ->get();
 
-        $data = $query->get();
+        if ($data->isEmpty()) {
+            return response()->json(['message' => 'No data available for the selected date range.'], 404);
+        }
 
-        // Create a new Spreadsheet
+        /* Export File Ke Excell */
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Add headers
-        $sheet->setCellValue('A1', 'Tanggal')
-            ->setCellValue('B1', 'Name')
-            ->setCellValue('C1', 'Sangat Puas')
-            ->setCellValue('D1', 'Puas')
-            ->setCellValue('E1', 'Tidak Puas')
-            ->setCellValue('F1', 'Total');
+        // Add title
+        $sheet->setCellValue('A1', 'Report Penilaian Karyawan');
+        $sheet->mergeCells('A1:F1');
+        $sheet->getStyle('A1')->applyFromArray([
+            'font' => ['bold' => true, 'size' => 14],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+        ]);
 
-        $sheet->getStyle('A1:F1')->applyFromArray([
+        // Add headers
+        $sheet->setCellValue('A3', 'Tanggal')
+            ->setCellValue('B3', 'Name')
+            ->setCellValue('C3', 'Sangat Puas')
+            ->setCellValue('D3', 'Puas')
+            ->setCellValue('E3', 'Tidak Puas')
+            ->setCellValue('F3', 'Total');
+
+        // Apply header styles
+        $sheet->getStyle('A3:F3')->applyFromArray([
             'font' => ['bold' => true],
             'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
         ]);
 
         // Populate data
-        $row = 2; // Start from the second row
+        $row = 4; // Start from row 4 to account for the title and headers
         foreach ($data as $item) {
             $sheet->setCellValue('A' . $row, $item->tanggal)
                 ->setCellValue('B' . $row, $item->name)
@@ -187,25 +218,63 @@ class AdminController extends Controller
             $row++;
         }
 
+        // Add grand total
+        $sheet->setCellValue('E' . $row, 'Grand Total:')
+            ->setCellValue('F' . $row, '=SUM(F4:F' . ($row - 1) . ')');
+        $sheet->getStyle('E' . $row . ':F' . $row)->applyFromArray([
+            'font' => ['bold' => true],
+            'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT],
+        ]);
+
         // Adjust column widths
         foreach (range('A', 'F') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
         // Set date format for column A
-        $sheet->getStyle('A2:A' . $row)->getNumberFormat()
-        ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DDMMYYYY);
+        $sheet->getStyle('A4:A' . $row)->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DDMMYYYY);
 
-        // Set header for download
+        // Freeze header row
+        $sheet->freezePane('A4');
+
+        // Set headers for download
         $filename = 'Penilaian_Report.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
 
-        // Save Excel file to output
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
         exit;
-        /* End Spreadsheet */
     }
+
+    public function edit($id)
+    {
+        $label = SettingLabel::findOrFail($id);
+        return view('admin.edit', compact('label'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Find the user by ID
+        $label = SettingLabel::findOrFail($id);
+
+        // Validate the request
+        $request->validate([
+            'namalabel' => 'required',
+            // Add other fields as needed
+        ]);
+
+        $label->update([
+            'namalabel' => $request->input('namalabel'),
+        ]);
+
+        return redirect()->back()->with('success', 'Label updated successfully');
+        // Kembalikan respons JSON
+        /* return response()->json([
+            'message' => 'Terima kasih atas penilaian Anda!',
+        ]); */
+    }
+
 }

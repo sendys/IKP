@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Penilaian;
+use App\Models\SettingLabel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
