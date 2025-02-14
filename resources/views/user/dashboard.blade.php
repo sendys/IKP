@@ -4,13 +4,15 @@
 @section('content')
 
 <style>
+    /* Fullscreen Background */
     body {
         background-image: url('{{ asset('image/bg_.jpg') }}');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        background-attachment: fixed; /* Keeps background fixed */
         width: 100vw;
-        height: 100vh;
+        min-height: 100vh; /* Ensures full height */
         margin: 0;
         padding: 0;
         overflow-x: hidden; /* Prevent horizontal scrolling */
@@ -18,31 +20,86 @@
         justify-content: center;
         align-items: center;
     }
+
+    /* Content Styling */
     .content-container {
-      max-width: 900px;
-      background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 20px;
+        max-width: 900px;
+        background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
     }
 
-  </style>
+    /* Responsive Styling */
+    .staff-img {
+        max-width: 100%;
+        height: auto;
+        width: 100%;
+        max-height: 400px;
+    }
+
+    .rating-img {
+        width: 80px;
+        height: auto;
+    }
+
+    @media (max-width: 768px) {
+        .d-flex {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .rating-img {
+            width: 70px;
+        }
+    }
+
+    /* Fixed Footer */
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(207, 207, 207, 0.8); /* Semi-transparent black */
+        color: rgb(48, 47, 47);
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* Justified & Centered Text */
+    .footer-text {
+        text-align: justify;
+        text-align-last: center;
+        margin: 0 auto;
+        max-width: 90%;
+    }
+
+    .animated-bg {
+    background-color: #3E8DE3;
+    transition: background-color 0.5s ease-in-out;
+    }
+
+    .animated-bg:hover {
+        background-color: #1e59b3;
+    }
+
+</style>
 
 <div class="container my-5">
     <div class="row g-4 align-items-center">
         <!-- Kolom Kiri (Foto Staff) -->
-        <div class="col-md-6 text-center">
-            <img src="{{ asset('image/staff.png') }}" alt="Azra Syahda" class="img-fluid rounded border shadow mb-3" style="width: 500px; height: 400px;">
+        <div class="col-md-6 col-12 text-center ">
+            <img src="{{ asset('image/staff.png') }}" alt="Azra Syahda" class="img-fluid rounded border shadow mb-3 staff-img">
 
-            <div class="w-100 text-white p-2" style="background-color: #606aff; max-width: 500px; margin: 0 auto;">
+            <div class="w-100 text-white p-2 text-center animated-bg" style="max-width: auto; margin: 0 auto;">
                 <h3 class="mb-0">{{ strtoupper(Auth::user()->name) }}</h3>
                 <h5 class="mb-0">01202311212</h5>
             </div>
-
         </div>
 
         <!-- Kolom Kanan (Logo dan Emoticon) -->
-        <div class="col-md-6 text-center">
+        <div class="col-md-6 col-12 text-center">
             <h2 class="text-dark mb-0">MAC CLEANING</h2>
             <h5>Be Clean, Be Happy</h5>
 
@@ -50,34 +107,40 @@
                 @csrf
             </form>
 
-            <div class="mb-3 cursor-pointer" onclick="document.getElementById('logout-form').submit();" style="cursor: pointer;">
-                <img src="{{ asset('image/logo.png') }}" alt="Logo" class="img-fluid mb-2" style="max-height: 150px;">
+            <div class="mb-3 cursor-pointer" onclick="document.getElementById('logout-form').submit();">
+                <img src="{{ asset('image/logo.png') }}" alt="Logo" class="img-fluid mb-2" style="max-height: 150px;cursor: pointer;">
             </div>
 
             <h3>{{ $data->namalabel }}</h3>
             <br>
 
-            <div class="d-flex justify-content-center gap-5">
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
                 <div class="text-center" onclick="submitRating(1)" style="cursor: pointer;">
-                    <img src="{{ asset('image/happy.png') }}" alt="Sangat Puas" style="width: 100px; height: 100px;">
+                    <img src="{{ asset('image/happy.png') }}" alt="Sangat Puas" class="rating-img">
                     <h5 class="mt-2">SANGAT PUAS</h5>
                 </div>
 
                 <div class="text-center" onclick="submitRating(2)" style="cursor: pointer;">
-                    <img src="{{ asset('image/smile.png') }}" alt="Cukup Puas" style="width: 100px; height: 100px;">
+                    <img src="{{ asset('image/smile.png') }}" alt="Cukup Puas" class="rating-img">
                     <h5 class="mt-2">CUKUP PUAS</h5>
                 </div>
 
                 <div class="text-center" onclick="submitRating(3)" style="cursor: pointer;">
-                    <img src="{{ asset('image/smile_1.png') }}" alt="Tidak Puas" style="width: 100px; height: 100px;">
+                    <img src="{{ asset('image/smile_1.png') }}" alt="Tidak Puas" class="rating-img">
                     <h5 class="mt-2">TIDAK PUAS</h5>
                 </div>
             </div>
-
-
         </div>
+    </div>
 </div>
-</div>
+
+<footer class="footer">
+    <h5 class="footer-text">
+        MAC Cleaning Banda Aceh | <span id="datetime"></span>
+        {{-- <br>
+        &copy; 2025 MAC CLEANING - All Rights Reserved | Contact: info@maccleaning.com --}}
+    </h5>
+</footer>
 
 {{-- <div class="container">
     <div class="row justify-content-center">
@@ -116,6 +179,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script>
+    function updateDateTime() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        document.getElementById('datetime').textContent = now.toLocaleDateString('id-ID', options);
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
     function submitRating(value) {
 
         $.ajax({

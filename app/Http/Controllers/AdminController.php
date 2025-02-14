@@ -27,19 +27,6 @@ class AdminController extends Controller
         $endDate = Carbon::parse($endDate)->endOfDay();
 
         if (empty($search)) {
-            /* DB::raw('ROUND((SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) /
-                        (SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) +
-                         SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) +
-                         SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END))) * 100,2) AS sangat_puas'),
-                    DB::raw('ROUND((SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) /
-                                    (SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) +
-                                    SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) +
-                                    SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END))) * 100,2) AS puas'),
-                    DB::raw('ROUND((SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END) /
-                        (SUM(CASE WHEN a.rating = 1 THEN 1 ELSE 0 END) +
-                         SUM(CASE WHEN a.rating = 2 THEN 1 ELSE 0 END) +
-                         SUM(CASE WHEN a.rating = 3 THEN 1 ELSE 0 END))) * 100,2) AS tidak_puas'), */
-
             $query = DB::table('penilaians as a')
                 ->join('users as b', 'a.user_id', '=', 'b.id')
                 ->select(
@@ -68,10 +55,10 @@ class AdminController extends Controller
 
         $total = $query->count();
         $data = $query
+            ->groupBy('a.user_id')
+            ->orderBy('tanggal', 'asc')
             ->skip(($page - 1) * $perPage)
             ->take($perPage)
-            ->groupBy('a.user_id')
-            ->orderBy('a.id')
             ->get();
 
         $persentase = $query->first();

@@ -12,6 +12,7 @@
 
     <!-- include head css -->
     @include('layouts.head-css')
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 @yield('body')
