@@ -1,359 +1,295 @@
-<!-- ========== Left Sidebar Start ========== -->
-<div class="vertical-menu">
+<div class="left-side-menu">
 
-    <!-- LOGO -->
-    <div class="navbar-brand-box">
-        <a href="{{ route('dashboard') }}" class="logo logo-dark">
-            <span class="logo-sm">
-                <img src="{{ URL::asset('build/images/logo-sm-dark.png') }}" alt="logo-sm-dark" height="24">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ URL::asset('build/images/logo-dark.png') }}" alt="logo-dark" height="22">
-            </span>
-        </a>
-
-        <a href="{{ route('dashboard') }}" class="logo logo-light">
-            <span class="logo-sm">
-                <img src="{{ URL::asset('build/images/logo-sm-light.png') }}" alt="logo-sm-light" height="24">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ URL::asset('build/images/logo-light.png') }}" alt="logo-light" height="22">
-            </span>
-        </a>
-    </div>
-
-    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn"
-        id="vertical-menu-btn">
-        <i class="ri-menu-2-line align-middle"></i>
-    </button>
-
-    <div data-simplebar class="vertical-scroll">
+    <div class="slimscroll-menu">
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
 
-            {{-- <div class="dropdown mx-3 sidebar-user user-dropdown select-dropdown">
-                <button type="button" class="btn btn-light w-100 waves-effect waves-light border-0"
-                    id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <div class="avatar-xs rounded-circle flex-shrink-0">
-                                <div
-                                    class="avatar-title border bg-light text-primary rounded-circle text-uppercase user-sort-name">
-                                    R</div>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-2 text-start">
-                            <h6 class="mb-1 fw-medium user-name-text"> Reporting </h6>
-                            <p class="font-size-13 text-muted user-name-sub-text mb-0"> Team Reporting </p>
-                        </div>
-                        <div class="flex-shrink-0 text-end">
-                            <i class="mdi mdi-chevron-down font-size-16"></i>
-                        </div>
-                    </span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end w-100">
-                    <!-- item-->
-                    <a class="dropdown-item d-flex align-items-center px-3" href="#">
-                        <div class="flex-shrink-0 me-2">
-                            <div class="avatar-xs rounded-circle flex-shrink-0">
-                                <div class="avatar-title border rounded-circle text-uppercase dropdown-sort-name">C
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0 dropdown-name">CRM</h6>
-                            <p class="text-muted font-size-13 mb-0 dropdown-sub-desc">Designer Team</p>
-                        </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center px-3" href="#">
-                        <div class="flex-shrink-0 me-2">
-                            <div class="avatar-xs rounded-circle flex-shrink-0">
-                                <div class="avatar-title border rounded-circle text-uppercase dropdown-sort-name">A
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0 dropdown-name">Application Design</h6>
-                            <p class="text-muted font-size-13 mb-0 dropdown-sub-desc">Flutter Devs</p>
-                        </div>
-                    </a>
+            <ul class="metismenu" id="side-menu">
 
-                    <a class="dropdown-item d-flex align-items-center px-3" href="#">
-                        <div class="flex-shrink-0 me-2">
-                            <div class="avatar-xs rounded-circle flex-shrink-0">
-                                <div class="avatar-title border rounded-circle text-uppercase dropdown-sort-name">E
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0 dropdown-name">Ecommerce</h6>
-                            <p class="text-muted font-size-13 mb-0 dropdown-sub-desc">Developer Team</p>
-                        </div>
-                    </a>
-
-                    <a class="dropdown-item d-flex align-items-center px-3" href="#">
-                        <div class="flex-shrink-0 me-2">
-                            <div class="avatar-xs rounded-circle flex-shrink-0">
-                                <div class="avatar-title border rounded-circle text-uppercase dropdown-sort-name">R
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0 dropdown-name">Reporting</h6>
-                            <p class="text-muted font-size-13 mb-0 dropdown-sub-desc">Team Reporting</p>
-                        </div>
-                    </a>
-
-                    <a class="btn btn-sm btn-link font-size-14 text-center w-100" href="javascript:void(0)">
-                        View More..
-                    </a>
-                </div>
-            </div> --}}
-
-            <!-- Left Menu Start -->
-            <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Menu</li>
+                <li class="menu-title">Navigation</li>
 
                 <li>
-                    <a href="{{ route('dashboard') }}" class="waves-effect">
-                        <i class="uim uim-airplay"></i><span class="badge rounded-pill bg-success float-end">3</span>
-                        <span>Dashboard</span>
+                    <a href="{{ route('dashboard') }}">
+                        <i class="fe-airplay"></i>
+                        <span class="float-right badge badge-success badge-pill">2</span>
+                        <span> Dashboard </span>
+                    </a>
+                   {{--  <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="index.html">Dashboard 1</a></li>
+                        <li> <a href="dashboard-2.html">Dashboard 2</a></li>
+                    </ul> --}}
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-sidebar"></i>
+                        <span>  Data </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="{{ route('pegawai.index') }}">Data Karyawan</a></li>
+                        <li><a href="{{ route('label.edit', 1) }}">Pengaturan Label</a></li>
+                        <li><a href="">Data User</a></li>
+                        {{-- <li><a href="">Dokter</a></li>
+                        <li><a href="layouts-small-sidebar.html">Small Sidebar</a></li>
+                        <li><a href="layouts-boxed.html">Boxed</a></li> --}}
+                    </ul>
+                </li>
+
+                {{-- <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-file-plus"></i>
+                        <span> Pelayanan </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="">Rawat Jalan</a></li>
+                        <li><a href="#">Pemeriksaan</a></li>
+                        <li><a href="">Register Pasien Umum</a></li>
+                        <li><a href="page-logout.html">Logout</a></li>
+                        <li><a href="page-recoverpw.html">Recover Password</a></li>
+                        <li><a href="page-lock-screen.html">Lock Screen</a></li>
+                        <li><a href="page-confirm-mail.html">Confirm Mail</a></li>
+                        <li><a href="page-404.html">Error 404</a></li>
+                        <li><a href="page-404-alt.html">Error 404-alt</a></li>
+                        <li><a href="page-500.html">Error 500</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-plus-square"></i>
+                        <span> Extra Pages </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="extras-about.html">About Us</a></li>
+                        <li><a href="extras-contact.html">Contact</a></li>
+                        <li><a href="extras-companies.html">Companies</a></li>
+                        <li><a href="extras-members.html">Members</a></li>
+                        <li><a href="extras-members-2.html">Members 2</a></li>
+                        <li><a href="extras-timeline.html">Timeline</a></li>
+                        <li><a href="extras-invoice.html">Invoice</a></li>
+                        <li><a href="extras-maintenance.html">Maintenance</a></li>
+                        <li><a href="extras-coming-soon.html">Coming Soon</a></li>
+                        <li><a href="extras-faq.html">FAQ</a></li>
+                        <li><a href="extras-pricing.html">Pricing</a></li>
+                        <li><a href="extras-profile.html">Profile</a></li>
+                        <li><a href="extras-email-template.html">Email Templates</a></li>
+                        <li><a href="extras-search-result.html">Search Results</a></li>
+                        <li><a href="extras-sitemap.html">Site Map</a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-title">Apps</li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-mail"></i>
+                        <span> Vclaim </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="">Poliklinik</a></li>
+                        <li><a href="">Dokter Layanan</a></li>
+                        <li><a href="email-compose.html">Compose Email</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="calendar.html">
+                        <i class="fe-calendar"></i>
+                        <span> Calendar </span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-comment-message"></i>
-                        <span>Apps</span>
+                    <a href="tickets.html">
+                        <i class="fe-life-buoy"></i>
+                        <span> Tickets </span>
+                        <span class="float-right badge badge-danger badge-pill">New</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="true">
+                </li>
+
+                <li>
+                    <a href="taskboard.html">
+                        <i class="fe-file-text"></i>
+                        <span> Task Board </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="todo.html">
+                        <i class="fe-layers"></i>
+                        <span> Todo </span>
+                    </a>
+                </li>
+
+                <li class="menu-title">Components</li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-target"></i>
+                        <span> Admin UI </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="admin-grid.html">Grid</a></li>
+                        <li><a href="admin-sweet-alert.html">Sweet Alert</a></li>
+                        <li><a href="admin-tiles.html">Tiles Box</a></li>
+                        <li><a href="admin-nestable.html">Nestable List</a></li>
+                        <li><a href="admin-rangeslider.html">Range Slider</a></li>
+                        <li><a href="admin-ratings.html">Ratings</a></li>
+                        <li><a href="admin-filemanager.html">File Manager</a></li>
+                        <li><a href="admin-lightbox.html">Lightbox</a></li>
+                        <li><a href="admin-scrollbar.html">Scroll bar</a></li>
+                        <li><a href="admin-slider.html">Slider</a></li>
+                        <li><a href="admin-treeview.html">Treeview</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-briefcase"></i>
+                        <span> UI Kit </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="ui-typography.html">Typography</a></li>
+                        <li><a href="ui-cards.html">Cards</a></li>
+                        <li><a href="ui-buttons.html">Buttons</a></li>
+                        <li><a href="ui-modals.html">Modals</a></li>
+                        <li><a href="ui-checkbox-radio.html">Checkboxs-Radios</a></li>
+                        <li><a href="ui-spinners.html">Spinners</a></li>
+                        <li><a href="ui-ribbons.html">Ribbons</a></li>
+                        <li><a href="ui-portlets.html">Portlets</a></li>
+                        <li><a href="ui-tabs.html">Tabs</a></li>
+                        <li><a href="ui-progressbars.html">Progress Bars</a></li>
+                        <li><a href="ui-notifications.html">Notification</a></li>
+                        <li><a href="ui-carousel.html">Carousel</a></li>
+                        <li><a href="ui-video.html">Video</a></li>
+                        <li><a href="ui-tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
+                        <li><a href="ui-images.html">Images</a></li>
+                        <li><a href="ui-bootstrap.html">Bootstrap UI</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-box"></i>
+                        <span>  Icons </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="icons-colored.html">Colored Icons</a></li>
+                        <li><a href="icons-materialdesign.html">Material Design</a></li>
+                        <li><a href="icons-dripicons.html">Dripicons</a></li>
+                        <li><a href="icons-fontawesome.html">Font awesome</a></li>
+                        <li><a href="icons-feather.html">Feather Icons</a></li>
+                        <li><a href="icons-simple-line.html">Simple line Icons</a></li>
+                        <li><a href="icons-flags.html">Flag Icons</a></li>
+                        <li><a href="icons-file.html">File Icons</a></li>
+                        <li><a href="icons-pe7.html">PE7 Icons</a></li>
+                        <li><a href="icons-typicons.html">Typicons</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-bar-chart-2"></i>
+                        <span> Graphs </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="chart-flot.html">Flot Chart</a></li>
+                        <li><a href="chart-morris.html">Morris Chart</a></li>
+                        <li><a href="chart-google.html">Google Chart</a></li>
+                        <li><a href="chart-echart.html">Echarts</a></li>
+                        <li><a href="chart-chartist.html">Chartist Charts</a></li>
+                        <li><a href="chart-chartjs.html">Chartjs Chart</a></li>
+                        <li><a href="chart-c3.html">C3 Chart</a></li>
+                        <li><a href="chart-sparkline.html">Sparkline Chart</a></li>
+                        <li><a href="chart-knob.html">Jquery Knob</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-disc"></i>
+                        <span class="float-right badge badge-warning badge-pill">12</span>
+                        <span> Forms </span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="form-elements.html">Form Elements</a></li>
+                        <li><a href="form-advanced.html">Form Advanced</a></li>
+                        <li><a href="form-layouts.html">Form Layouts</a></li>
+                        <li><a href="form-validation.html">Form Validation</a></li>
+                        <li><a href="form-pickers.html">Form Pickers</a></li>
+                        <li><a href="form-wizard.html">Form Wizard</a></li>
+                        <li><a href="form-mask.html">Form Masks</a></li>
+                        <li><a href="form-summernote.html">Summernote</a></li>
+                        <li><a href="form-quilljs.html">Quilljs Editor</a></li>
+                        <li><a href="form-typeahead.html">Typeahead</a></li>
+                        <li><a href="form-x-editable.html">X Editable</a></li>
+                        <li><a href="form-uploads.html">Multiple File Upload</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-layout"></i>
+                        <span> Tables </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="tables-basic.html">Basic Tables</a></li>
+                        <li><a href="tables-layouts.html">Tables Layouts</a></li>
+                        <li><a href="tables-datatable.html">Data Tables</a></li>
+                        <li><a href="tables-foo-tables.html">Foo Tables</a></li>
+                        <li><a href="tables-responsive.html">Responsive Table</a></li>
+                        <li><a href="tables-tablesaw.html">Tablesaw Tables</a></li>
+                        <li><a href="tables-editable.html">Editable Tables</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-map"></i>
+                        <span> Maps </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="maps-google.html">Google Maps</a></li>
+                        <li><a href="maps-vector.html">Vector Maps</a></li>
+                        <li><a href="maps-mapael.html">Mapael Maps</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-folder-plus"></i>
+                        <span> Multi Level </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level nav" aria-expanded="false">
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow">Email</a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="email-inbox">Inbox</a></li>
-                                <li><a href="email-read">Read Email</a></li>
-                            </ul>
+                            <a href="javascript: void(0);">Level 1.1</a>
                         </li>
-
-                        <li><a href="calendar">Calendar</a></li>
-
-                        <li><a href="apps-chat">Chat</a></li>
-
-                        <li><a href="apps-file-manager">File Manager</a></li>
-
-
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow">Invoice</a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="invoices">Invoices</a></li>
-                                <li><a href="invoice-detail">Invoice Detail</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">Users</a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="users-list">Users List</a></li>
-                                <li><a href="users-detail">Users Detail</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-window-grid"></i>
-                        <span>Layouts</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">Vertical</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="layouts-dark-sidebar">Dark Sidebar</a></li>
-                                <li><a href="layouts-light-sidebar">Light Sidebar</a></li>
-                                <li><a href="layouts-compact-sidebar">Compact Sidebar</a></li>
-                                <li><a href="layouts-icon-sidebar">Icon Sidebar</a></li>
-                                <li><a href="layouts-boxed">Boxed Layout</a></li>
-                                <li><a href="layouts-preloader">Preloader</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">Horizontal</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="layouts-horizontal">Horizontal</a></li>
-                                <li><a href="layouts-hori-light-header">Light Header</a></li>
-                                <li><a href="layouts-hori-topbar-dark">Topbar Dark</a></li>
-                                <li><a href="layouts-hori-boxed-width">Boxed width</a></li>
-                                <li><a href="layouts-hori-preloader">Preloader</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="menu-title">Pages</li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-sign-in-alt"></i>
-                        <span>Setting</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('label.edit', 1) }}">Setting Label</a></li>
-                        <li><a href="{{ route('users.index') }}">User</a></li>
-                       {{--  <li><a href="auth-recoverpw">Recover Password</a></li>
-                        <li><a href="auth-lock-screen">Lock Screen</a></li> --}}
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-box"></i>
-                        <span>Extra Pages</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="pages-starter">Starter Page</a></li>
-                        <li><a href="pages-maintenance">Maintenance</a></li>
-                        <li><a href="pages-comingsoon">Coming Soon</a></li>
-                        <li><a href="pages-404">Error 404</a></li>
-                        <li><a href="pages-500">Error 500</a></li>
-                        <li><a href="pages-faq">(Help Center) FAQ</a></li>
-                        <li><a href="pages-profile">Profile</a></li>
-                        <li><a href="pages-pricing">Pricing</a></li>
-                        <li><a href="pages-terms-conditions">Terms & Conditions</a></li>
-                    </ul>
-                </li>
-
-               {{--  <li class="menu-title">Components</li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-layer-group"></i>
-                        <span>UI Elements</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="ui-alerts">Alerts</a></li>
-                        <li><a href="ui-buttons">Buttons</a></li>
-                        <li><a href="ui-cards">Cards</a></li>
-                        <li><a href="ui-carousel">Carousel</a></li>
-                        <li><a href="ui-dropdowns">Dropdowns</a></li>
-                        <li><a href="ui-grid">Grid</a></li>
-                        <li><a href="ui-images">Images</a></li>
-                        <li><a href="ui-lightbox">Lightbox</a></li>
-                        <li><a href="ui-modals">Modals</a></li>
-                        <li><a href="ui-offcanvas">Offcavas</a></li>
-                        <li><a href="ui-rangeslider">Range Slider</a></li>
-                        <li><a href="ui-roundslider">Round Slider</a></li>
-                        <li><a href="ui-session-timeout">Session Timeout</a></li>
-                        <li><a href="ui-progressbars">Progress Bars</a></li>
-                        <li><a href="ui-sweet-alert">Sweetalert 2</a></li>
-                        <li><a href="ui-tabs-accordions">Tabs & Accordions</a></li>
-                        <li><a href="ui-typography">Typography</a></li>
-                        <li><a href="ui-video">Video</a></li>
-                        <li><a href="ui-general">General</a></li>
-                        <li><a href="ui-rating">Rating</a></li>
-                        <li><a href="ui-notifications">Notifications</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="waves-effect">
-                        <i class="uim uim-document-layout-left"></i>
-                        <span class="badge rounded-pill bg-danger float-end">6</span>
-                        <span>Forms</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="form-elements">Basic Elements</a></li>
-                        <li><a href="form-validation">Validation</a></li>
-                        <li><a href="form-plugins">Plugins</a></li>
-                        <li><a href="form-editors">Editors</a></li>
-                        <li><a href="form-uploads">File Upload</a></li>
-                        <li><a href="form-wizard">Wizard</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-table"></i>
-                        <span>Tables</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="tables-bootstrap">Bootstrap Tables</a></li>
-                        <li><a href="tables-datatable">Data Tables</a></li>
-                        <li><a href="tables-editable">Editable Table</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-chart-pie"></i>
-                        <span>Charts</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" class="has-arrow">Apexcharts Part 1</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="charts-line">Line</a></li>
-                                <li><a href="charts-area">Area</a></li>
-                                <li><a href="charts-column">Column</a></li>
-                                <li><a href="charts-bar">Bar</a></li>
-                                <li><a href="charts-mixed">Mixed</a></li>
-                                <li><a href="charts-timeline">Timeline</a></li>
-                                <li><a href="charts-candlestick">Candlestick</a></li>
-                                <li><a href="charts-boxplot">Boxplot</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="javascript: void(0);" class="has-arrow">Apexcharts Part 2</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="charts-bubble">Bubble</a></li>
-                                <li><a href="charts-scatter">Scatter</a></li>
-                                <li><a href="charts-heatmap">Heatmap</a></li>
-                                <li><a href="charts-treemap">Treemap</a></li>
-                                <li><a href="charts-pie">Pie</a></li>
-                                <li><a href="charts-radialbar">Radialbar</a></li>
-                                <li><a href="charts-radar">Radar</a></li>
-                                <li><a href="charts-polararea">Polararea</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="charts-echart">E Charts</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-object-ungroup"></i>
-                        <span>Icons</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="icons-remix">Remix Icons</a></li>
-                        <li><a href="icons-materialdesign">Material Design</a></li>
-                        <li><a href="icons-unicons">Unicons</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-comment-plus"></i>
-                        <span>Maps</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="maps-google">Google Maps</a></li>
-                        <li><a href="maps-vector">Vector Maps</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uim uim-layers-alt"></i>
-                        <span>Multi Level</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);">Level 1.1</a></li>
-                        <li><a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="javascript: void(0);">Level 2.1</a></li>
-                                <li><a href="javascript: void(0);">Level 2.2</a></li>
+                            <a href="javascript: void(0);" aria-expanded="false">Level 1.2
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="nav-third-level nav" aria-expanded="false">
+                                <li>
+                                    <a href="javascript: void(0);">Level 2.1</a>
+                                </li>
+                                <li>
+                                    <a href="javascript: void(0);">Level 2.2</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -362,56 +298,11 @@
             </ul>
 
         </div>
-        <!-- Sidebar -->
+        <!-- End Sidebar -->
+
+        <div class="clearfix"></div>
+
     </div>
-
-    <div class="dropdown px-3 sidebar-user sidebar-user-info">
-        <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
-            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="d-flex align-items-center">
-                <div class="flex-shrink-0">
-                    <img src="{{ URL::asset('build/images/users/avatar-3.jpg') }}"
-                        class="img-fluid header-profile-user rounded-circle" alt="">
-                </div>
-
-                <div class="flex-grow-1 ms-2 text-start">
-                    <span class="ms-1 fw-medium user-name-text">
-                        {{ Auth()->user()->name }}
-                    </span>
-                </div>
-
-                <div class="flex-shrink-0 text-end">
-                    <i class="mdi mdi-dots-vertical font-size-16"></i>
-                </div>
-            </span>
-        </button>
-        <div class="dropdown-menu dropdown-menu-end">
-            <!-- item-->
-            <a class="dropdown-item" href="pages-profile"><i
-                    class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Profile</span></a>
-            <a class="dropdown-item" href="apps-chat"><i
-                    class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Messages</span></a>
-            {{-- <a class="dropdown-item" href="pages-faq"><i
-                    class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Help</span></a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="pages-profile"><i
-                    class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Balance : <b>$5971.67</b></span></a> --}}
-            <a class="dropdown-item" href="#"><span class="badge bg-primary mt-1 float-end">New</span><i
-                    class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Settings</span></a>
-            <a class="dropdown-item" href="javascript:void();"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
-                    class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Logout</span></a>
-            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </div>
-    </div>
+    <!-- Sidebar -left -->
 
 </div>
-<!-- Left Sidebar End -->

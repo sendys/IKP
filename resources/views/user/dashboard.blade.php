@@ -64,7 +64,7 @@
         color: rgb(48, 47, 47);
         text-align: center;
         padding: 10px;
-        font-size: 14px;
+        font-size: 12px;
     }
 
     /* Justified & Centered Text */
@@ -211,7 +211,7 @@
                 Swal.fire({
                 title: "Terima kasih.!",
                 html: "I will close in <b></b> milliseconds.",
-                timer: 2000,
+                timer: 1000,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading();

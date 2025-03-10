@@ -11,7 +11,7 @@ Route::middleware('guest:web')->group(function () {
 });
 
 Route::middleware(['auth:web', 'role:user'])->group(function () {
-    
+
     Route::get('/user/dashboard', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('user.dashboard');
     Route::post('/penilaian/store', [App\Http\Controllers\PenilaianController::class, 'store'])->name('penilaian.store');
     Route::get('/penilaian/{id}', [App\Http\Controllers\PenilaianController::class, 'show']);
@@ -47,6 +47,14 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:admin'])->group(function
 
     Route::get('/label/edit/{id}', [App\Http\Controllers\AdminController::class, 'edit'])->name('label.edit');
     Route::put('/label/update/{id}', [App\Http\Controllers\AdminController::class, 'update'])->name('label.update');
+
+    //Pegawai
+    Route::get('/index', [App\Http\Controllers\PegawaiController::class, 'index'])->name('pegawai.index');
+    Route::get('/create', [App\Http\Controllers\PegawaiController::class, 'create'])->name('pegawai.create');
+    Route::post('/store', [App\Http\Controllers\PegawaiController::class, 'store'])->name('pegawai.store');
+    Route::get('/edit/{id}', [App\Http\Controllers\PegawaiController::class, 'edit'])->name('pegawai.edit');
+    Route::put('/update/{id}', [App\Http\Controllers\PegawaiController::class, 'update'])->name('pegawai.update');
+    Route::get('/pegawaidelete/{id}', [App\Http\Controllers\PegawaiController::class, 'pegawaideleted'])->name('pegawai.delete');
 
     Route::post('/logout', [LoginController::class, 'adminLogout'])->name('admin.logout');
 });
