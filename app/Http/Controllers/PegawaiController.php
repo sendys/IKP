@@ -144,55 +144,68 @@ class PegawaiController extends Controller
      */
     public function edit($id) : View
     {
-        $pegawais = Pegawai::findOrFail($id);
-        return view('admin.pegawai.edit', compact('pegawais'));
+        $pegawai = Pegawai::findOrFail($id);
+        return view('admin.pegawai.edit', compact('pegawai'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) : RedirectResponse
+
+    public function update(Request $request, $id)
     {
-        //dd($request->all());
-
-         // Find the user by ID
-        $pegawais = Pegawai::findOrFail($id);
-
+        // Validasi input
         $request->validate([
-            'nik' => 'required|integer|min:16|unique:pegawais,nik,' . $pegawais->id,
-            'kode_maping_bpjs' =>'required',
             'nama' => 'required|string',
-            'tempat_lahir' => 'required|string',
-            'tanggal_lahir' => 'required|date',
-            'kelamin' => 'required',
-            'agama' => 'required|string',
-            'telp' => 'required|string',
-            'nomorsip' => 'required|string',
-            'pendidikan' => 'required|string',
-            'status_kawin' => 'required|string',
-            'alamat' => 'required|string',
+            'tlahir' => 'required',
+            'tgllhr' => 'required|date',
+            'jk' => 'required',
+            'lokasi' => 'required',
+            'telp' => 'required',
+            'path' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-         // Update only specific fields
-        $pegawais->update([
-            'nik' => $request->input('nik'),
-            'nip' => $request->input('nip'),
-            'kode_maping_bpjs' => $request->input('kode_maping_bpjs'),
-            'nama' => $request->input('nama'),
-            'tempat_lahir' => $request->input('tempat_lahir'),
-            'tanggal_lahir' => $request->input('tanggal_lahir'),
-            'kelamin' => $request->input('kelamin'),
-            'agama' =>$request->input('agama'),
-            'telp' => $request->input('telp'),
-            'nomorsip' => $request->input('nomorsip'),
-            'pendidikan' => $request->input('pendidikan'),
-            'status_kawin' => $request->input('status_kawin'),
-            'alamat' => $request->input('alamat'),
-        ]);
+        try {
+            // Ambil data pegawai
+            $pegawai = DB::table('pegawais')->where('id', $id)->first();
+            if (!$pegawai) {
+                return response()->json(['success' => false, 'message' => 'Data tidak ditemukan.'], 404);
+            }
 
-        Alert::success('Success', 'Saved Successfully');
-        return redirect()->route('admin.pegawai.index')->with('success', 'Pegawai updated successfully');
+            // Simpan path foto lama
+            $fotoPath = $pegawai->path;
 
+            // Jika ada file baru, upload dan hapus yang lama
+            if ($request->hasFile('path')) {
+                // Hapus foto lama jika ada
+                if ($fotoPath && Storage::exists($fotoPath)) {
+                    Storage::delete($fotoPath);
+                }
+
+                // Simpan foto baru di folder public/photo
+                $file = $request->file('path');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = $file->storeAs('photo', $fileName, 'public'); // Simpan di storage/app/public/photo
+
+                // Update path foto
+                $fotoPath = 'storage/' . $filePath; // Simpan path dengan "storage/"
+            }
+            // Update data pegawai
+            DB::table('pegawais')->where('id', $id)->update([
+                'nama' => $request->input('nama'),
+                'tlahir' => $request->input('tlahir'),
+                'tgllhr' => $request->input('tgllhr'),
+                'jk' => $request->input('jk'),
+                'telp' => $request->input('telp'),
+                'lokasi' => $request->input('lokasi'),
+                'alamat' => $request->input('alamat'),
+                'path' => $fotoPath, // Simpan nama file saja, tanpa path lengkap
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Data berhasil diperbarui!']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
     /**

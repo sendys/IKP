@@ -94,7 +94,7 @@
 
         <li class="dropdown notification-list">
             <a class="mr-0 nav-link dropdown-toggle nav-user waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                <img src="{{ asset('admin/images/users/avatar-5.jpg') }}" alt="user-image" class="rounded-circle">
+                <img src="{{ asset(Auth::user()->pegawai->path) }}" alt="user-image" class="rounded-circle">
                 <span class="ml-1 pro-user-name">
                    {{--  {{ Auth::user()->pegawai->nama }} <i class="mdi mdi-chevron-down"></i> --}}
                     {{ Auth::user()->pegawai->nama ?? 'Administrator' }} <i class="mdi mdi-chevron-down"></i>

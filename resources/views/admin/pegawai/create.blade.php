@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('content')
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('admin/js/pages/form-advanced.init.js') }}"></script>
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -155,9 +159,6 @@
             </form>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('admin/js/pages/form-advanced.init.js') }}"></script>
 
 <script >
 

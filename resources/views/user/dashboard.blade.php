@@ -35,7 +35,7 @@
         max-width: 100%;
         height: auto;
         width: 100%;
-        max-height: 400px;
+        max-height: 500px;
     }
 
     .rating-img {
@@ -90,11 +90,11 @@
     <div class="row g-4 align-items-center">
         <!-- Kolom Kiri (Foto Staff) -->
         <div class="col-md-6 col-12 text-center ">
-            <img src="{{ asset('image/staff.png') }}" alt="Azra Syahda" class="img-fluid rounded border shadow mb-3 staff-img">
+            <img src="{{ asset(Auth::user()->pegawai->path) }}" alt="Azra Syahda" class="img-fluid rounded border shadow mb-2 staff-img">
 
             <div class="w-100 text-white p-2 text-center animated-bg" style="max-width: auto; margin: 0 auto;">
-                <h3 class="mb-0">{{ strtoupper(Auth::user()->name) }}</h3>
-                <h5 class="mb-0">01202311212</h5>
+                <h3 class="mb-0">{{ strtoupper(Auth::user()->pegawai->nama) }}</h3>
+                <h5 class="mb-0">{{ Auth::user()->pegawai->telp }}</h5>
             </div>
         </div>
 
@@ -136,7 +136,7 @@
 
 <footer class="footer">
     <h5 class="footer-text">
-        MAC Cleaning Banda Aceh | <span id="datetime"></span>
+        MAC Cleaning {{ Auth::user()->pegawai->lokasi }} | <span id="datetime"></span>
         {{-- <br>
         &copy; 2025 MAC CLEANING - All Rights Reserved | Contact: info@maccleaning.com --}}
     </h5>

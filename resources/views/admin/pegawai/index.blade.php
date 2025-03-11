@@ -121,6 +121,8 @@
                                             <td>{{$peg->alamat }}</td>
 
                                             <td>
+                                                <a href="{{ route('pegawai.edit', $peg->id) }}" class="table-action-btn"><i class="mdi mdi-plus"></i></a>
+
                                                 <!-- Edit button -->
                                                 <a href="{{ route('pegawai.edit', $peg->id) }}" class="table-action-btn"><i class="mdi mdi-pencil"></i></a>
 

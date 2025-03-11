@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Pegawai extends Model
 {
@@ -24,4 +25,9 @@ class Pegawai extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'pegawai_id');
+    }
 }

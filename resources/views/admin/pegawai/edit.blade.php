@@ -1,17 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
-    #loading {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9999; /* Pastikan loading berada di depan elemen lain */
-}
-</style>
-
-<link href="{{ asset('libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- start page title -->
     <div class="row">
@@ -32,29 +23,19 @@
     <div class="col-12">
         <div class="card-box">
 
-            <div id="loading" style="display: none;">
-                <img src="{{ asset('admin/images/loading_color.gif') }}" alt="Loading..."> <!-- Ganti path/to/loading.gif dengan lokasi file GIF Anda -->
-            </div>
-
             {{-- <h4 class="mb-4 header-title">Horizontal form</h4> --}}
 
-            <form id="pegawaiFormEdit" class="form-horizontal">
-               {{--  @csrf --}}
-               {{--  @method('PUT') --}}
+            <form id="pegawaiFormEdit" class="form-horizontal" enctype="multipart/form-data">
+               @csrf
+               @method('PUT')
 
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-md-2 col-form-label">No. Identitas (KTP)</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik" value="{{ old('nik', $pegawai->nik) }}" placeholder="No. Identitas (KTP)">
-                        @error('nik')
+                        <input type="text" class="form-control @error('ktp') is-invalid @enderror" id="ktp" name="ktp" value="{{ old('ktp', $pegawai->ktp) }}" placeholder="No. Identitas (KTP)">
+                        @error('ktp')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputPassword3" class="col-md-2 col-form-label">NPWP</label>
-                    <div class="col-md-7">
-                        <input type="text" class="form-control" id="npwp" name="npwp" value="{{ old('npwp', $pegawai->npwp) }}" style="background-color:aliceblue" placeholder="npwp">
                     </div>
                 </div>
 
@@ -70,48 +51,63 @@
                 <div class="form-group row">
                     <label for="inputPassword5" class="col-md-2 col-form-label">Tempat Lahir</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control @error('tmp_lahir') is-invalid @enderror " id="tmp_lahir" name="tmp_lahir" value="{{ old('tmp_lahir', $pegawai->tmp_lahir) }}" placeholder="tempat lahir">
-                        @error('tmp_lahir')
+                        <input type="text" class="form-control @error('tlahir') is-invalid @enderror " id="tlahir" name="tlahir" value="{{ old('tlahir', $pegawai->tlahir) }}" placeholder="tempat lahir">
+                        @error('tlahir')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="inputPassword5" class="col-md-2 col-form-label">Tanggal Lahir</label>
+                    <label for="tgllhr" class="col-md-2 col-form-label">Tanggal Lahir</label>
                     <div class="col-md-7">
-                        <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror" id="tgl_lahir" name="tgl_lahir" value="{{ old('tgl_lahir', $pegawai->tgl_lahir) }}" placeholder="tanggal lahir">
-                        @error('tgl_lahir')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <div class="input-group">
+                            <input type="text" class="form-control @error('tgl_lahir') is-invalid @enderror" name="tgllhr" id="tgllhr"
+                                value="{{ old('tgllhr', $pegawai->tgllhr) }}"
+                                data-date-format="yyyy-mm-dd" data-provide="datepicker"
+                                data-date-autoclose="true">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                            </div>
+                            @error('tgllhr')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label">Jenis Kelamin</label>
                     <div class="col-md-7">
                         <select class="form-control @error('jk') is-invalid @enderror" id="jk" name="jk" data-toggle="select2">
                             <option value="">Pilih Kelamin</option>
-                            <option value="Pria" {{ old('jk', $pegawai->jk) == 'Pria' ? 'selected' : '' }}>Laki-Laki</option>
-                            <option value="Wanita" {{ old('jk', $pegawai->jk) == 'Wanita' ? 'selected' : '' }}>Perempuan</option>
+                            <option value="L" {{ old('jk', $pegawai->jk) == 'L' ? 'selected' : '' }}>Laki-Laki</option>
+                            <option value="P" {{ old('jk', $pegawai->jk) == 'P' ? 'selected' : '' }}>Perempuan</option>
                         </select>
                         @error('jk')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label">Jabatan</label>
-                    <div class="col-md-7">
-                        <select class="form-control @error('jbtn') is-invalid @enderror" id="jbtn" name="jbtn" data-toggle="select2">
-                            <option value="">Pilih Jabatan</option>
-                            <option value="-">--</option>
-                            <option value="pns" {{ old('jbtn', $pegawai->jbtn) == 'pns' ? 'selected' : '' }}>PNS</option>
-                            <option value="nonpns" {{ old('jbtn', $pegawai->jbtn) == 'nonpns' ? 'selected' : '' }}>Non PNS</option>
-                            <option value="dokter" {{ old('jbtn', $pegawai->jbtn) == 'dokter' ? 'selected' : '' }}>Dokter</option>
 
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Lokasi Kerja</label>
+                    <div class="col-md-7">
+                        <select class="form-control @error('lokasi') is-invalid @enderror" id="lokasi" name="lokasi" data-toggle="select2">
+                            <option value="">Pilih Lokasi Kerja</option>
+                            <option value="Banda Aceh" {{ old('lokasi', $pegawai->lokasi) == 'Banda Aceh' ? 'selected' : '' }}>Banda Aceh</option>
+                            <option value="Lhokseumawe" {{ old('lokasi', $pegawai->lokasi) == 'Lhokseumawe' ? 'selected' : '' }}>Lhokseumawe</option>
                         </select>
-                        @error('jbtn')
+                        @error('lokasi')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputPassword7" class="col-md-2 col-form-label">Telp/HP</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp', $pegawai->telp)}}" placeholder="No. Telp/HP">
+
                     </div>
                 </div>
 
@@ -124,6 +120,20 @@
                         @enderror
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="inputPassword6" class="col-md-2 col-form-label">Lokasi Photo</label>
+                    <div class="col-md-7">
+                        <input type="file" class="filestyle" id="path" name="path" data-btnClass="btn-primary" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputPassword6" class="col-md-2 col-form-label">Foto Saat Ini</label>
+                    <div class="col-md-7">
+                        <img src="{{ asset($pegawai->path) }}" alt="Foto Pegawai" style="max-width: 200px; max-height: 200px;">
+                    </div>
+                </div>
+
                 <br>
                 <div class="form-group row">
                     <div class="col-md-7 offset-md-2"> <!-- Use offset to align with input field -->
@@ -135,49 +145,49 @@
         </div>
     </div>
 
-<script src="{{ asset('libs/sweetalert2/sweetalert2.min.js') }}"></script>
-<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script>
     $(document).ready(function () {
-        $('#pegawaiFormEdit').on('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
-            $('#loading').show();
+    $('#pegawaiFormEdit').on('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+        $('#loading').show();
 
-            $.ajax({
-                url: '{{ route('pegawai.update', $pegawai->id) }}', // Ensure this route is correct
-                method: 'PUT',
-                data: $(this).serialize(), // Serialize form data
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token
-                },
-                success: function (response) {
-                    if (response.success) {
-                        Swal.fire('Success', response.message, 'success').then(() => {
-                            window.location.href = '{{ route("pegawai.index") }}'; // Redirect to pasien.index
-                        });
-                        $('#pegawaiFormEdit')[0].reset(); // Reset the form after successful submission
-                    }
+        // Gunakan FormData agar bisa upload file
+        let formData = new FormData(this);
 
-                    $('#loading').hide();
-                },
-                error: function (xhr) {
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        let errorMessages = '';
-                        $.each(errors, function (key, value) {
-                            errorMessages += value[0] + '<br>'; // Collect error messages
-                        });
-                        Swal.fire('Validation Error', errorMessages, 'warning');
-                    } else {
-                        Swal.fire('Error', xhr.responseJSON.message || 'An error occurred. Please try again.', 'error');
-                    }
-
-                    $('#loading').hide();
+        $.ajax({
+            url: '{{ route('pegawai.update', $pegawai->id) }}', // Ensure this route is correct
+            method: 'POST',
+            data: formData, // Gunakan FormData
+            processData: false, // Jangan proses data agar FormData berfungsi
+            contentType: false, // Jangan set contentType agar FormData berfungsi
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token
+            },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire('Success', response.message, 'success').then(() => {
+                        window.location.href = '{{ route("pegawai.index") }}'; // Redirect ke index
+                    });
                 }
-            });
+                $('#loading').hide();
+            },
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessages = '';
+                    $.each(errors, function (key, value) {
+                        errorMessages += value[0] + '<br>'; // Collect error messages
+                    });
+                    Swal.fire('Validation Error', errorMessages, 'warning');
+                } else {
+                    Swal.fire('Error', xhr.responseJSON.message || 'An error occurred. Please try again.', 'error');
+                }
+                $('#loading').hide();
+            }
         });
     });
+});
+
 </script>
 
 @endsection
