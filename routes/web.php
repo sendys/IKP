@@ -35,14 +35,14 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:admin'])->group(function
     Route::get('/dashboard',[App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
     Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
-    Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+    Route::post('/user/store', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     Route::get('/index', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-    Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
-    Route::get('/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
-    Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
-    Route::delete('/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
-    Route::get('/reset/{id}', [App\Http\Controllers\UserController::class, 'showresetpassword'])->name('users.reset');
-    Route::put('/reset/password/{id}', [App\Http\Controllers\UserController::class, 'resetpassword'])->name('user.update-password');
+    Route::get('/user/create/{pegawai}', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+    Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+    Route::put('/user/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::delete('/user/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/user/reset/{pegawai}', [App\Http\Controllers\UserController::class, 'showresetpassword'])->name('user.reset');
+    Route::put('/reset/password/{pegawai}', [App\Http\Controllers\UserController::class, 'resetpassword'])->name('user.update-password');
     Route::get('/export-penilaian', [App\Http\Controllers\AdminController::class, 'exportToExcel'])->name('export_data');
 
     Route::get('/label/edit/{id}', [App\Http\Controllers\AdminController::class, 'edit'])->name('label.edit');

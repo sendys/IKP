@@ -28,12 +28,14 @@ class PegawaiController extends Controller
         // If the search is empty, return the default results
         if (empty($search)) {
             $query = DB::table('pegawais')
-                ->select('pegawais.id','pegawais.nama','pegawais.ktp','pegawais.tlahir','pegawais.tgllhr','pegawais.jk',
+                ->leftJoin('users', 'pegawais.id', '=', 'users.pegawai_id')
+                ->select('pegawais.id','users.id as user_id','pegawais.nama','pegawais.ktp','pegawais.tlahir','pegawais.tgllhr','pegawais.jk',
                 'pegawais.telp','pegawais.lokasi','pegawais.alamat','pegawais.path')
                         ->whereNull('pegawais.deleted_at');
         } else {
             $query = DB::table('pegawais')
-            ->select('pegawais.id','pegawais.nama','pegawais.ktp','pegawais.tlahir','pegawais.tgllhr','pegawais.jk',
+                ->leftJoin('users', 'pegawais.id', '=', 'users.pegawai_id')
+                ->select('pegawais.id','users.id as user_id','pegawais.nama','pegawais.ktp','pegawais.tlahir','pegawais.tgllhr','pegawais.jk',
             'pegawais.telp','pegawais.lokasi','pegawais.alamat','pegawais.path')
                     ->whereNull('pegawais.deleted_at')
                     ->where(function ($q) use ($search) {

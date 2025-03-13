@@ -73,6 +73,7 @@
                         @else
                         <div class="mb-0 table-responsive" data-pattern="priority-columns">
                             <table id="tech-companies-1" class="table m-0 table-hover table-actions-bar">
+                                {{-- <pre>{{ var_dump($pegawai) }}</pre> --}}
                                 <thead>
                                     <tr>
                                         <td>No</td>
@@ -107,7 +108,13 @@
                                                 @endif
                                             </td>
                                             <td>{{$peg->ktp}}</td>
-                                            <td>{{$peg->nama}}</td>
+                                            {{-- <td>{{$peg->nama}}</td> --}}
+                                            @if ($peg->user_id)
+                                                <td><a href="{{ route('user.reset', $peg->id) }}" style="text-decoration: underline;">{{$peg->nama}}</a></td>
+                                            @else
+                                                <td>{{$peg->nama}}</td>
+                                            @endif
+
                                             <td>{{$peg->tlahir}}</td>
                                             <td>{{$peg->tgllhr }}</td>
                                             <td>
@@ -121,10 +128,21 @@
                                             <td>{{$peg->alamat }}</td>
 
                                             <td>
-                                                <a href="{{ route('pegawai.edit', $peg->id) }}" class="table-action-btn"><i class="mdi mdi-plus"></i></a>
+                                                {{-- <a href="{{ route('users.create', $peg->id) }}" class="table-action-btn" title="Tambah User"><i class="mdi mdi-plus"></i></a> --}}
+
+                                                @php
+                                                    $userExists = \App\Models\User::where('pegawai_id', $peg->id)->exists();
+                                                @endphp
+
+                                                <a href="{{ !$userExists ? route('users.create', $peg->id) : '#' }}"
+                                                    class="table-action-btn {{ $userExists ? 'disabled' : '' }}"
+                                                    title="Tambah User">
+                                                     <i class="mdi mdi-plus"></i>
+                                                </a>
 
                                                 <!-- Edit button -->
-                                                <a href="{{ route('pegawai.edit', $peg->id) }}" class="table-action-btn"><i class="mdi mdi-pencil"></i></a>
+                                                <a href="{{ route('pegawai.edit', $peg->id) }}" class="table-action-btn">
+                                                    <i class="mdi mdi-pencil"></i></a>
 
                                                 <!-- Delete button with confirmation -->
                                                 <form id="delete-form-{{ $peg->id }}" action="{{ route('pegawai.delete', $peg->id) }}" method="POST" style="display:inline;">

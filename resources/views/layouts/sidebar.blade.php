@@ -30,7 +30,7 @@
                     <ul class="nav-second-level" aria-expanded="false">
                         <li><a href="{{ route('pegawai.index') }}">Data Karyawan</a></li>
                         <li><a href="{{ route('label.edit', 1) }}">Pengaturan Label</a></li>
-                        <li><a href="">Data User</a></li>
+
                         {{-- <li><a href="">Dokter</a></li>
                         <li><a href="layouts-small-sidebar.html">Small Sidebar</a></li>
                         <li><a href="layouts-boxed.html">Boxed</a></li> --}}

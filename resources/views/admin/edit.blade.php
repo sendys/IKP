@@ -36,7 +36,7 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            <div class="col-sm-9 todo-inputbar">
+                            {{-- <div class="col-sm-9 todo-inputbar">
                                 <input type="text" id="namalabel" name="namalabel" class="form-control @error('namalabel') is-invalid @enderror" value="{{ old('namalabel', $label->namalabel) }}" placeholder="Edit Label">
                                     @error('namalabel')
                                                 <span class="invalid-feedback" role="alert">
@@ -44,6 +44,9 @@
                                                 </span>
                                     @enderror
 
+                            </div> --}}
+                            <div class="col-sm-9 todo-inputbar">
+                                <textarea id="namalabel" name="namalabel" required class="form-control">{{ old('namalabel', $label->namalabel) }}</textarea>
                             </div>
                             <div class="col-sm-3 todo-send">
                                 <button class="btn-primary btn-md btn-block btn waves-effect waves-light" type="submit" id="todo-btn-submit">Simpan</button>

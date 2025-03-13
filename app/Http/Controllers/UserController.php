@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Pegawai;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -58,10 +59,10 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() : View
+    public function create(Pegawai $pegawai) : View
     {
         //
-        return view('admin.pengguna.create');
+        return view('admin.pengguna.create', compact('pegawai'));
     }
 
     /**
@@ -89,14 +90,68 @@ class UserController extends Controller
         }
 
         $users = User::create([
+            'pegawai_id' => $request['pegawai_id'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'role' => $request['role'],
             'name' => $request['name'],
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User saved successfully');
+        return redirect()->route('pegawai.index')->with('success', 'User saved successfully');
     }
+
+    /* public function store(Request $request)
+    {
+        try {
+            // Validasi input
+            $validasidata = $request->validate([
+                'name' => 'required|string',
+                'role' => 'required|string',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:6',
+            ], [
+                'name.required' => 'Nama wajib diisi!',
+                'role.required' => 'Role wajib diisi!',
+                'email.required' => 'Email wajib diisi!',
+                'email.email' => 'Format email tidak valid!',
+                'password.required' => 'Password wajib diisi!',
+                'password.min' => 'Password minimal 6 karakter!',
+            ]);
+
+            // Cek apakah user sudah ada berdasarkan nama
+            $userExists = User::where('name', $request->input('name'))->exists();
+
+            if ($userExists) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Nama user sudah ada.',
+                ], 400);
+            }
+
+            // Buat user baru
+            $user = User::create([
+                'pegawai_id' => $request->pegawai_id,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+            ]);
+            dd($user);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User berhasil dibuat.',
+                'data' => $user
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    } */
+
 
     /**
      * Display the specified resource.
@@ -153,13 +208,13 @@ class UserController extends Controller
 
     }
 
-    public function showresetpassword($id) : View
+    public function showresetpassword(Pegawai $pegawai) : View
     {
-        $user = User::findOrFail($id);
-        return view('admin.pengguna.resetpassword', compact('user'));
+        /* $user = User::findOrFail($id); */
+        return view('admin.pengguna.resetpassword', compact('pegawai'));
     }
 
-    public function resetpassword(Request $request, $id)
+    public function resetpassword(Request $request, $pegawai_id)
     {
         $validator = Validator::make($request->all(), [
             'new_password' => 'required|min:6',
@@ -169,12 +224,14 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user = User::findOrFail($id);
+        // Cari user berdasarkan pegawai_id
+        $user = User::where('pegawai_id', $pegawai_id)->firstOrFail();
+
+        // Update password user
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'Change Password Successfully');
+        return redirect()->route('pegawai.index')->with('success', 'Password berhasil direset');
     }
-
 
 }
