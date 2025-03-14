@@ -163,51 +163,52 @@
                         @endif
 
                 </div>
+
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <!-- Previous Page Link -->
+                    @if ($pagination['current_page'] > 1)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('pegawai.index', array_merge(request()->except('page'), ['page' => $pagination['current_page'] - 1])) }}">
+                                {{-- <span aria-hidden="true">&laquo;</span> --}}
+                                Previous
+                            </a>
+                        </li>
+                    @else
+                        <li class="page-item disabled">
+                            <span class="page-link">Previous</span>
+                        </li>
+                    @endif
+
+                    <!-- Page Numbers -->
+                    @for ($i = 1; $i <= $pagination['last_page']; $i++)
+                        <li class="page-item {{ $i == $pagination['current_page'] ? 'active' : '' }}">
+                           {{--  <a class="page-link" href="{{ route('pasiens.index', array_merge(request()->except('page'), ['page' => $i])) }}">
+                                {{ $i }}
+                            </a> --}}
+                        </li>
+                    @endfor
+
+                    <!-- Next Page Link -->
+                    @if ($pagination['current_page'] < $pagination['last_page'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('pegawai.index', array_merge(request()->except('page'), ['page' => $pagination['current_page'] + 1])) }}">
+                                {{-- <span aria-hidden="true">&raquo;</span> --}}
+                                Next
+                            </a>
+                        </li>
+                    @else
+                        <li class="page-item disabled">
+                            <span class="page-link">Next</span>
+                        </li>
+                    @endif
+
+                </ul>
+            </nav>
         </div>
     </div>
     <!-- end row -->
-    <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                <!-- Previous Page Link -->
-                @if ($pagination['current_page'] > 1)
-                    <li class="page-item">
-                        <a class="page-link" href="{{ route('pegawai.index', array_merge(request()->except('page'), ['page' => $pagination['current_page'] - 1])) }}">
-                            {{-- <span aria-hidden="true">&laquo;</span> --}}
-                            Previous
-                        </a>
-                    </li>
-                @else
-                    <li class="page-item disabled">
-                        <span class="page-link">Previous</span>
-                    </li>
-                @endif
-
-                <!-- Page Numbers -->
-                @for ($i = 1; $i <= $pagination['last_page']; $i++)
-                    <li class="page-item {{ $i == $pagination['current_page'] ? 'active' : '' }}">
-                       {{--  <a class="page-link" href="{{ route('pasiens.index', array_merge(request()->except('page'), ['page' => $i])) }}">
-                            {{ $i }}
-                        </a> --}}
-                    </li>
-                @endfor
-
-                <!-- Next Page Link -->
-                @if ($pagination['current_page'] < $pagination['last_page'])
-                    <li class="page-item">
-                        <a class="page-link" href="{{ route('pegawai.index', array_merge(request()->except('page'), ['page' => $pagination['current_page'] + 1])) }}">
-                            {{-- <span aria-hidden="true">&raquo;</span> --}}
-                            Next
-                        </a>
-                    </li>
-                @else
-                    <li class="page-item disabled">
-                        <span class="page-link">Next</span>
-                    </li>
-                @endif
-
-            </ul>
-    </nav>
 
     <script>
         $(document).ready(function () {

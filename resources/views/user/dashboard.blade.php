@@ -43,6 +43,20 @@
         height: auto;
     }
 
+    /* Styling dasar untuk elemen rating */
+    .rating-item {
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    /* Efek hover */
+    .rating-item:hover {
+        transform: scale(1.1); /* Memperbesar elemen */
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Menambahkan bayangan */
+        background-color: #f0f8ff; /* Mengubah warna latar belakang */
+    }
+
     @media (max-width: 768px) {
         .d-flex {
             flex-direction: column;
@@ -114,18 +128,18 @@
             <h3>{{ $data->namalabel }}</h3>
             <br>
 
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <div class="text-center" onclick="submitRating(1)" style="cursor: pointer;">
+            <div class="d-flex justify-content-center gap-4 flex-wrap">
+                <div class="text-center rating-item" onclick="submitRating(1)" style="cursor: pointer;">
                     <img src="{{ asset('image/happy.png') }}" alt="Sangat Puas" class="rating-img">
                     <h5 class="mt-2">SANGAT PUAS</h5>
                 </div>
 
-                <div class="text-center" onclick="submitRating(2)" style="cursor: pointer;">
+                <div class="text-center rating-item" onclick="submitRating(2)" style="cursor: pointer;">
                     <img src="{{ asset('image/smile.png') }}" alt="Cukup Puas" class="rating-img">
                     <h5 class="mt-2">CUKUP PUAS</h5>
                 </div>
 
-                <div class="text-center" onclick="submitRating(3)" style="cursor: pointer;">
+                <div class="text-center rating-item" onclick="submitRating(3)" style="cursor: pointer;">
                     <img src="{{ asset('image/smile_1.png') }}" alt="Tidak Puas" class="rating-img">
                     <h5 class="mt-2">TIDAK PUAS</h5>
                 </div>
@@ -136,7 +150,7 @@
 
 <footer class="footer">
     <h5 class="footer-text">
-        MAC Cleaning {{ Auth::user()->pegawai->lokasi }} | <span id="datetime"></span>
+        Maccleaning {{ Auth::user()->pegawai->lokasi }} | <span id="datetime"></span>
         {{-- <br>
         &copy; 2025 MAC CLEANING - All Rights Reserved | Contact: info@maccleaning.com --}}
     </h5>

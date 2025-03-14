@@ -96,7 +96,7 @@
         <div class="bg-white login-card">
             <!-- Left Image Column -->
             <div class="p-0 col-md-6 image-container d-none d-md-flex">
-                <img src="{{ asset('admin/images/hospital-login.gif') }}" alt="Hospital Image" class="login-image">
+                <img src="{{ asset('admin/images/36.png') }}" alt="Hospital Image" class="login-image">
             </div>
 
             <!-- Right Login Form Column -->

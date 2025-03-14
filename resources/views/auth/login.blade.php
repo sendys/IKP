@@ -96,7 +96,7 @@
         <div class="bg-white login-card">
             <!-- Left Image Column -->
             <div class="p-0 col-md-6 image-container d-none d-md-flex">
-                <img src="{{ asset('admin/images/original.gif') }}" alt="Hospital Image" class="login-image">
+                <img src="{{ asset('admin/images/05.svg') }}" alt="Hospital Image" class="login-image">
             </div>
 
             <!-- Right Login Form Column -->
@@ -109,7 +109,7 @@
 
                     <!-- Sign-In Section -->
                     <h5 class="mt-1 text-uppercase text-primary">Sign In</h5>
-                    <p class="text-muted">Login to your User account</p>
+                    <p class="text-muted">Login UserFront Office</p>
                 </div>
 
                 @include('sweetalert::alert')
