@@ -10,12 +10,12 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-attachment: fixed; /* Keeps background fixed */
+        background-attachment: fixed;
         width: 100vw;
-        min-height: 100vh; /* Ensures full height */
+        min-height: 100vh;
         margin: 0;
         padding: 0;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        overflow-x: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -23,48 +23,91 @@
 
     /* Content Styling */
     .content-container {
+        width: 100%;
         max-width: 900px;
-        background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         padding: 20px;
     }
 
-    /* Responsive Styling */
+    /* Responsive Images */
     .staff-img {
-        max-width: 100%;
-        height: auto;
         width: 100%;
+        height: auto;
         max-height: 500px;
     }
 
     .rating-img {
-        width: 80px;
+        width: 70px;
         height: auto;
     }
 
-    /* Styling dasar untuk elemen rating */
+    /* Rating Item */
     .rating-item {
         transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-        padding: 15px;
+        padding: 10px;
         border-radius: 10px;
     }
 
-    /* Efek hover */
     .rating-item:hover {
-        transform: scale(1.1); /* Memperbesar elemen */
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Menambahkan bayangan */
-        background-color: #f0f8ff; /* Mengubah warna latar belakang */
+        transform: scale(1.1);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        background-color: #f0f8ff;
     }
 
-    @media (max-width: 768px) {
-        .d-flex {
-            flex-direction: column;
-            gap: 10px;
+    /* For tablets: 768px - 1024px */
+    @media (max-width: 1024px) {
+        .content-container {
+            max-width: 95%;
+            padding: 15px;
+        }
+
+        .staff-img {
+            max-height: 450px;
         }
 
         .rating-img {
             width: 70px;
+        }
+
+        .animated-bg h3, .animated-bg h5 {
+            font-size: 1rem;
+        }
+
+        .d-flex {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+
+    /* For small tablets or large phones: 600px - 767px */
+    @media (max-width: 767px) {
+        .staff-img {
+            max-height: 400px;
+        }
+
+        .rating-img {
+            width: 60px;
+        }
+
+        h2, h3, h5 {
+            font-size: 0.85rem;
+        }
+    }
+
+    /* For phones */
+    @media (max-width: 480px) {
+        .staff-img {
+            max-height: 300px;
+        }
+
+        .rating-img {
+            width: 50px;
+        }
+
+        .content-container {
+            padding: 10px;
         }
     }
 
@@ -74,14 +117,14 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        background-color: rgba(207, 207, 207, 0.8); /* Semi-transparent black */
+        background-color: rgba(207, 207, 207, 0.8);
         color: rgb(48, 47, 47);
         text-align: center;
         padding: 10px;
         font-size: 12px;
+        z-index: 10;
     }
 
-    /* Justified & Centered Text */
     .footer-text {
         text-align: justify;
         text-align-last: center;
@@ -90,15 +133,15 @@
     }
 
     .animated-bg {
-    background-color: #3E8DE3;
-    transition: background-color 0.5s ease-in-out;
+        background-color: #3E8DE3;
+        transition: background-color 0.5s ease-in-out;
     }
 
     .animated-bg:hover {
         background-color: #1e59b3;
     }
-
 </style>
+
 
 <div class="container my-5">
     <div class="row g-4 align-items-center">

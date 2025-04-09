@@ -95,20 +95,20 @@
     <div class="container-fluid login-container">
         <div class="bg-white login-card">
             <!-- Left Image Column -->
-            <div class="p-0 col-md-6 image-container d-none d-md-flex">
+            <div class="p-0 col-md-6 image-container d-none d-md-flex flex-column">
+                <div class="text-center w-100">
+                    <h4 class="mt-1 text-black fs-30 fw-bold">MACCLEANING.ID</h4>
+                    <p class="text-black">Laundry & SPA Sepatu</p>
+                </div>
                 <img src="{{ asset('admin/images/36.png') }}" alt="Hospital Image" class="login-image">
             </div>
 
             <!-- Right Login Form Column -->
             <div class="p-4 col-md-6">
                 <div class="text-center">
-                    {{-- <div class="logo-container">
-                        <img src="{{ asset('admin/images/logo.png') }}" alt="Logo" class="logo"> <!-- Logo Image -->
-                    </div> --}}
-                    <h4 class="mt-1 text-black fs-30 fw-bold">MACCLEANING.ID</h4>
-                    <p class="text-black">Laundry $ SPA Sepatu</p>
-                    {{-- <h5 class="mt-2 text-uppercase">Sign In</h5>
+                   {{-- <h5 class="mt-2 text-uppercase">Sign In</h5>
                     <p>Login to your Admin account</p> --}}
+                    <br>
                 </div>
 
                 @include('sweetalert::alert')
@@ -148,7 +148,8 @@
                 </form>
 
                 <div class="mt-4 text-center">
-                    <p class="mb-0 text-muted">Don't have an account? <a href="#" class="text-dark"><b>Sign Up</b></a></p>
+                    <br>
+                    {{-- <p class="mb-0 text-muted">Don't have an account? <a href="#" class="text-dark"><b>Sign Up</b></a></p> --}}
                 </div>
             </div>
         </div>
