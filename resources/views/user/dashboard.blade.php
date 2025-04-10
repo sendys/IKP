@@ -56,19 +56,23 @@
         background-color: #f0f8ff;
     }
 
-    /* For tablets: 768px - 1024px */
-    @media (max-width: 1024px) {
+    /* Tablet 11 inch - Portrait & Landscape */
+    @media screen and (min-width: 768px) and (max-width: 1194px) {
         .content-container {
-            max-width: 95%;
-            padding: 15px;
+            max-width: 90%;
+            padding: 20px;
         }
 
         .staff-img {
-            max-height: 450px;
+            max-height: 500px;
         }
 
         .rating-img {
             width: 70px;
+        }
+
+        h2, h3, h5 {
+            font-size: 1rem;
         }
 
         .animated-bg h3, .animated-bg h5 {
@@ -77,7 +81,39 @@
 
         .d-flex {
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
+        }
+
+        .rating-item {
+            padding: 12px;
+        }
+
+        .animated-bg {
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .rating-item:hover {
+            transform: scale(1.05);
+            background-color: #eef6ff;
+        }
+
+        .footer {
+            font-size: 13px;
+        }
+    }
+
+    /* Landscape orientation */
+    @media screen and (orientation: landscape) {
+        .row {
+            flex-direction: row;
+        }
+    }
+
+    /* Portrait orientation */
+    @media screen and (orientation: portrait) {
+        .row {
+            flex-direction: column;
         }
     }
 
@@ -198,38 +234,6 @@
         &copy; 2025 MAC CLEANING - All Rights Reserved | Contact: info@maccleaning.com --}}
     </h5>
 </footer>
-
-{{-- <div class="container">
-    <div class="row justify-content-center">
-        <!-- Logo Perusahaan -->
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-
-        <div class="logo" onclick="document.getElementById('logout-form').submit();">
-            <img src="{{ asset('image/logo.png') }}" alt="Logo Perusahaan">
-        </div>
-
-        <h1>{{ $data->namalabel }}</h1>
-
-        <div class="rating-container">
-            @csrf
-            <div class="rating" onclick="submitRating(1)" style="cursor: pointer;">
-                <img src="{{ asset('image/happy.png') }}" alt="Sangat Puas">
-                <p>Sangat Puas</p>
-            </div>
-            <div class="rating" onclick="submitRating(2)" style="cursor: pointer;">
-                <img src="{{ asset('image/smile.png') }}" alt="Puas">
-                <p>Puas</p>
-            </div>
-            <div class="rating" onclick="submitRating(3)" style="cursor: pointer;">
-                <img src="{{ asset('image/smile_1.png') }}" alt="Tidak Puas">
-                <p>Tidak Puas</p>
-            </div>
-        </div>
-    </div>
-</div> --}}
-
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
