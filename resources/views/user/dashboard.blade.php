@@ -39,7 +39,7 @@
     }
 
     .rating-img {
-        width: 60px;
+        width: 100px;
         height: auto;
     }
 
