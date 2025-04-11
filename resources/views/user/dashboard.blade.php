@@ -28,7 +28,7 @@
         background: rgba(255, 255, 255, 0.9);
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
+        padding: 10px;
     }
 
     /* Responsive Images */
@@ -39,7 +39,7 @@
     }
 
     .rating-img {
-        width: 70px;
+        width: 60px;
         height: auto;
     }
 
@@ -54,97 +54,6 @@
         transform: scale(1.1);
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         background-color: #f0f8ff;
-    }
-
-    /* Tablet 11 inch - Portrait & Landscape */
-    @media screen and (min-width: 768px) and (max-width: 1194px) {
-        .content-container {
-            max-width: 90%;
-            padding: 20px;
-        }
-
-        .staff-img {
-            max-height: 500px;
-        }
-
-        .rating-img {
-            width: 70px;
-        }
-
-        h2, h3, h5 {
-            font-size: 1rem;
-        }
-
-        .animated-bg h3, .animated-bg h5 {
-            font-size: 1rem;
-        }
-
-        .d-flex {
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .rating-item {
-            padding: 12px;
-        }
-
-        .animated-bg {
-            border-radius: 12px;
-            padding: 10px;
-        }
-
-        .rating-item:hover {
-            transform: scale(1.05);
-            background-color: #eef6ff;
-        }
-
-        .footer {
-            font-size: 13px;
-        }
-    }
-
-    /* Landscape orientation */
-    @media screen and (orientation: landscape) {
-        .row {
-            flex-direction: row;
-        }
-    }
-
-    /* Portrait orientation */
-    @media screen and (orientation: portrait) {
-        .row {
-            flex-direction: column;
-        }
-    }
-
-    /* For small tablets or large phones: 600px - 767px */
-    @media (max-width: 767px) {
-        .staff-img {
-            max-height: 400px;
-        }
-
-        .rating-img {
-            width: 60px;
-        }
-
-        h2, h3, h5 {
-            font-size: 0.85rem;
-        }
-    }
-
-    /* For phones */
-    @media (max-width: 480px) {
-        .staff-img {
-            max-height: 300px;
-        }
-
-        .rating-img {
-            width: 50px;
-        }
-
-        .content-container {
-            padding: 10px;
-        }
     }
 
     /* Fixed Footer */
@@ -210,17 +119,17 @@
             <div class="d-flex justify-content-center gap-4 flex-wrap">
                 <div class="text-center rating-item" onclick="submitRating(1)" style="cursor: pointer;">
                     <img src="{{ asset('image/happy.png') }}" alt="Sangat Puas" class="rating-img">
-                    <h5 class="mt-2">SANGAT PUAS</h5>
+                    <h6 class="mt-2">SANGAT PUAS</h6>
                 </div>
 
                 <div class="text-center rating-item" onclick="submitRating(2)" style="cursor: pointer;">
                     <img src="{{ asset('image/smile.png') }}" alt="Cukup Puas" class="rating-img">
-                    <h5 class="mt-2">CUKUP PUAS</h5>
+                    <h6 class="mt-2">CUKUP PUAS</h6>
                 </div>
 
                 <div class="text-center rating-item" onclick="submitRating(3)" style="cursor: pointer;">
                     <img src="{{ asset('image/smile_1.png') }}" alt="Tidak Puas" class="rating-img">
-                    <h5 class="mt-2">TIDAK PUAS</h5>
+                    <h6 class="mt-2">TIDAK PUAS</h6>
                 </div>
             </div>
         </div>
