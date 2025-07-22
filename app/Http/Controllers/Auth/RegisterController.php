@@ -69,6 +69,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'role' => $data['role'],
             'password' => Hash::make($data['password']),
+            'is_active' => false, // User baru diblokir secara default
         ]);
     }
 }

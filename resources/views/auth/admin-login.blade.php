@@ -119,6 +119,7 @@
 
                 <form id="login-form" class="mt-4" method="POST" action="{{ route('admin.login') }}">
                     @csrf
+
                     <div class="mb-3">
                         <label for="emailaddress">Email address</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" value="{{ old('email') }}">

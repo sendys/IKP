@@ -20,7 +20,6 @@ class PenilaianController extends Controller
 
         // Simpan data ke database
         Penilaian::create([
-            'user_id'   => Auth::id(),
             'rating' => $validated['rating'],
         ]);
 
@@ -28,6 +27,5 @@ class PenilaianController extends Controller
         return response()->json([
             'message' => 'Terima kasih atas penilaian Anda!',
         ]);
-
     }
 }

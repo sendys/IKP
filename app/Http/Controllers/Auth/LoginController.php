@@ -62,6 +62,14 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('web')->attempt($credentials)) {
+            $user = Auth::guard('web')->user();
+
+            // Cek apakah user aktif
+            if (!$user->is_active) {
+                Auth::guard('web')->logout();
+                return back()->withErrors(['email' => 'Akun Anda belum diaktivasi oleh admin. Silakan hubungi administrator.']);
+            }
+
             return redirect()->route('user.dashboard');
         }
 
