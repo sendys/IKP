@@ -4,6 +4,59 @@
 @section('content')
 
     <style>
+        /* Keyframe animations for background effects */
+        @keyframes backgroundPulse {
+
+            0%,
+            100% {
+                filter: brightness(1) contrast(1);
+                transform: scale(1);
+            }
+
+            50% {
+                filter: brightness(1.1) contrast(1.05);
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes backgroundShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes floatingParticles {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(180deg);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes subtleZoom {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
         /* Fullscreen Background */
         body {
             background-image: url('{{ asset('image/bg_.jpg') }}');
@@ -19,6 +72,45 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+
+            /* Add subtle animation to the background */
+            animation: backgroundPulse 8s ease-in-out infinite;
+
+            /* Alternative animation options - uncomment one at a time:
+                    
+                    /* Option 1: Subtle zoom effect */
+            /* animation: subtleZoom 12s ease-in-out infinite; */
+
+            /* Option 2: No animation (original static background) */
+            /* animation: none; */
+
+            */
+        }
+
+        /* Add floating particles overlay effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 200px 200px, 300px 300px, 150px 150px, 250px 250px;
+            animation: floatingParticles 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Ensure all content stays above animated background */
+        .container {
+            position: relative;
+            z-index: 2;
         }
 
         .fullscreen {
