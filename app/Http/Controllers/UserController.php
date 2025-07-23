@@ -95,6 +95,7 @@ class UserController extends Controller
             'password' => Hash::make($request['password']),
             'role' => $request['role'],
             'name' => $request['name'],
+            'is_active' => false, // User baru diblokir secara default
         ]);
 
         return redirect()->route('pegawai.index')->with('success', 'User saved successfully');
@@ -232,6 +233,44 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('pegawai.index')->with('success', 'Password berhasil direset');
+    }
+
+    /**
+     * Aktivasi atau deaktivasi user
+     */
+    public function toggleStatus($id)
+    {
+        $user = User::findOrFail($id);
+        $user->is_active = !$user->is_active;
+        $user->save();
+
+        $status = $user->is_active ? 'diaktivasi' : 'dinonaktifkan';
+
+        return redirect()->back()->with('success', "User berhasil {$status}");
+    }
+
+    /**
+     * Aktivasi user
+     */
+    public function activate($id)
+    {
+        $user = User::findOrFail($id);
+        $user->is_active = true;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User berhasil diaktivasi');
+    }
+
+    /**
+     * Deaktivasi user
+     */
+    public function deactivate($id)
+    {
+        $user = User::findOrFail($id);
+        $user->is_active = false;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User berhasil dinonaktifkan');
     }
 
 }

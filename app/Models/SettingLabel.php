@@ -11,7 +11,6 @@ class SettingLabel extends Model
     use HasFactory;
 
     protected $fillable = [
-        'namalabel',
+        'namalabel'
     ];
-
 }

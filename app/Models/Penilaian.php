@@ -18,14 +18,13 @@ class Penilaian extends Model
      */
     protected $table = 'penilaians';
     protected $fillable = [
-        'user_id',
         'rating',
     ];
 
-    public function user()
+    /* public function user()
     {
         return $this->belongsTo(User::class);
-    }
+    } */
 
     protected $dates = ['created_at', 'updated_at'];
 
@@ -38,5 +37,4 @@ class Penilaian extends Model
     {
         return Carbon::parse($value)->format('d-m-Y H:i:s');
     }
-
 }
